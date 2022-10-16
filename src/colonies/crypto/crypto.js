@@ -7,6 +7,7 @@ class Crypto {
         var go = this.go
         let promise = new Promise(function(ok, err) {
             WebAssembly.instantiateStreaming(fetch("./colonies/crypto/cryptolib.wasm"), go.importObject).then((result) => {
+                console.log(result)
                 go.run(result.instance);
                 ok()
             })

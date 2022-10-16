@@ -562,13 +562,34 @@ let Crypto = class {
         this.go = new globalThis.Go();
     }
 
-    load() {
+    //     async function fetchAndInstantiate() {
+    //     const response = await fetch("http://localhost:3000/simple.wasm"); const buffer = await response.arrayBuffer(); const obj = await WebAssembly.instantiate(buffer); console.log(obj.instance.exports.add(1, 2));  // "3" 
+    // }
+    load1() {
         var go = this.go
         let promise = new Promise(function(ok, err) {
             WebAssembly.instantiateStreaming(fetch("./cryptolib.wasm"), go.importObject).then((result) => {
                 console.log("XXXX")
                 go.run(result.instance);
                 ok()
+            })
+        })
+        return promise
+    }
+
+    load() {
+        var go = this.go
+        let promise = new Promise(function(ok, err) {
+            fetch("./cryptolib.wasm").then((r) => {
+                console.log("---------------------")
+                r.arrayBuffer().then((buffer) => {
+                    console.log(buffer)
+                    WebAssembly.instantiate(buffer, go.importObject).then((result) => {
+                        console.log("XXXX")
+                        go.run(result.instance);
+                        ok()
+                    })
+                });
             })
         })
         return promise
