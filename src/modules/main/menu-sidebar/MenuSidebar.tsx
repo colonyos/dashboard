@@ -124,28 +124,6 @@ const MenuSidebar = () => {
                 </Link>
             </center>
             <div className="sidebar">
-                <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div className="image">
-                        <StyledUserImage
-                            src={user.picture}
-                            fallbackSrc="/img/default-profile.png"
-                            alt="User"
-                            width={34}
-                            height={34}
-                            rounded
-                        />
-                    </div>
-                    <div className="info">
-                        <Link to="/profile" className="d-block">
-                            {user.email}
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="form-inline">
-                    <SidebarSearch />
-                </div>
-
                 <nav className="mt-2" style={{ overflowY: 'hidden' }}>
                     <ul
                         className={`nav nav-pills nav-sidebar flex-column${menuItemFlat ? ' nav-flat' : ''

@@ -30,7 +30,7 @@ const Login = () => {
             navigate('/');
         } catch (error: any) {
             setAuthLoading(false);
-            toast.error(error.message || 'Failed');
+            toast.error(error.message || 'Failed to login');
         }
     };
 
@@ -76,17 +76,6 @@ const Login = () => {
                                     isValid={touched.email && !errors.email}
                                     isInvalid={touched.email && !!errors.email}
                                 />
-                                {touched.email && errors.email ? (
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.email}
-                                    </Form.Control.Feedback>
-                                ) : (
-                                    <InputGroup.Append>
-                                        <InputGroup.Text>
-                                            <i className="fas fa-envelope" />
-                                        </InputGroup.Text>
-                                    </InputGroup.Append>
-                                )}
                             </InputGroup>
                         </div>
                         <div className="mb-3">
@@ -101,17 +90,6 @@ const Login = () => {
                                     isValid={touched.password && !errors.password}
                                     isInvalid={touched.password && !!errors.password}
                                 />
-                                {touched.password && errors.password ? (
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.password}
-                                    </Form.Control.Feedback>
-                                ) : (
-                                    <InputGroup.Append>
-                                        <InputGroup.Text>
-                                            <i className="fas fa-lock" />
-                                        </InputGroup.Text>
-                                    </InputGroup.Append>
-                                )}
                             </InputGroup>
                         </div>
 
