@@ -2,53 +2,85 @@
 import { ContentHeader } from '@components';
 import React, { Component } from "react";
 import { global } from '../global'
+import Table from 'react-bootstrap/Table';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 class PendingProcessesView extends Component {
     constructor() {
         super();
         this.state = {
-            name: "React"
+            processes: [],
         };
     }
 
     componentDidMount() {
-        var rt = global.runtime
+        let rt = global.runtime
         rt.load().then(() => {
-            console.log("loaded colonies")
-            rt.getProcesses(global.colonyId, 100, 0, global.runtimePrvKey).then((msg) => {
-                console.log(msg)
+            rt.getProcesses(global.colonyId, 100, 0, global.runtimePrvKey).then((processes) => {
+                this.setState({ processes: processes })
             })
+            this.interval = setInterval(() => {
+                rt.getProcesses(global.colonyId, 100, 0, global.runtimePrvKey).then((processes) => {
+                    this.setState({ processes: processes })
+                })
+            }, 1000)
         })
+    }
 
-        // this.setState({ name: "Johan" })
+    componentWillUnmount() {
+        clearInterval(this.interval)
     }
 
     render() {
-        const { name } = this.state;
+        let props = this.props
+        const Trigger = (processid) => {
+            props.navigate("/process?processid=" + processid)
+        }
+
+        const { processes } = this.state;
+        const items = []
+        for (let i = 0; i < processes.length; i++) {
+            let process = processes[i]
+            //console.log(process)
+            items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
+                <td> {process.processid}</td>
+                <td> {process.submissiontime}</td>
+                <td> {process.spec.func} {process.spec.args} </td>
+                <td> {process.spec.conditions.runtimetype}</td>
+            </tr>)
+        }
+
         return (
-            <div>
-                <h3>Using Axios in React for API call {name} </h3>
-                <hr />
-            </div>
+            <Table striped bordered hover >
+                <thead>
+                    <tr>
+                        <th>Process Id</th>
+                        <th>Submission Time</th>
+                        <th>Function</th>
+                        <th>Target Runtime Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {items}
+                </tbody>
+            </Table >
+
         );
     }
 }
 
-const Blank = () => {
+const Page = () => {
+    const navigate = useNavigate();
     return (
         <div>
             <ContentHeader title="Pending processes" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">Title</h3>
-                        </div>
                         <div className="card-body">
-                            <PendingProcessesView />
-                            Start creating your amazing application!
+                            <PendingProcessesView navigate={navigate} />
                         </div>
-                        <div className="card-footer">Footer</div>
                     </div>
                 </div>
             </section>
@@ -57,4 +89,4 @@ const Blank = () => {
 };
 
 
-export default Blank;
+export default Page;

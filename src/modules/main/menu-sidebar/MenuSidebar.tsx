@@ -32,7 +32,7 @@ export const MENU: IMenuItem[] = [
             {
                 name: "Pending",
                 icon: "fa-hourglass",
-                path: '/pendingprocesses'
+                path: '/pendingprocesses',
             },
             {
                 name: "Running",
@@ -124,6 +124,7 @@ const MenuSidebar = () => {
                 </Link>
             </center>
             <div className="sidebar">
+
                 <nav className="mt-2" style={{ overflowY: 'hidden' }}>
                     <ul
                         className={`nav nav-pills nav-sidebar flex-column${menuItemFlat ? ' nav-flat' : ''

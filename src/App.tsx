@@ -11,6 +11,7 @@ import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import Workers from '@pages/Workers';
 import PendingProcesses from '@pages/PendingProcesses';
+import Process from '@pages/Process';
 import RunningProcesses from '@pages/RunningProcesses';
 import SuccessfulProcesses from '@pages/SuccessfulProcesses';
 import FailedProcesses from '@pages/FailedProcesses';
@@ -48,10 +49,8 @@ const App = () => {
                 </Route>
                 <Route path="/" element={<PrivateRoute />}>
                     <Route path="/" element={<Main />}>
-                        <Route path="/sub-menu-2" element={<Blank />} />
-                        <Route path="/sub-menu-1" element={<SubMenu />} />
-                        <Route path="/blank" element={<Blank />} />
                         <Route path="/workers" element={<Workers />} />
+                        <Route path="/process" element={<Process />} />
                         <Route path="/pendingprocesses" element={<PendingProcesses />} />
                         <Route path="/runningprocesses" element={<RunningProcesses />} />
                         <Route path="/successfulprocesses" element={<SuccessfulProcesses />} />
