@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from '@app/App';
 import store from '@store/store';
+//import ColonyRuntime from './colonies/colonyruntime.js';
 
 import './utils/i18n';
 import './index.css';
@@ -16,6 +17,7 @@ window.PF = {
     }
 };
 
+//const runtime = new ColonyRuntime("localhost", "50080")
 const container: any = document.getElementById('root');
 const root = createRoot(container);
 root.render(

@@ -1,6 +1,38 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
 import { ContentHeader } from '@components';
+import React, { Component } from "react";
+import { global } from '../global'
+
+class PendingProcessesView extends Component {
+    constructor() {
+        super();
+        this.state = {
+            name: "React"
+        };
+    }
+
+    componentDidMount() {
+        var rt = global.runtime
+        rt.load().then(() => {
+            console.log("loaded colonies")
+            rt.getProcesses(global.colonyId, 100, 0, global.runtimePrvKey).then((msg) => {
+                console.log(msg)
+            })
+        })
+
+        // this.setState({ name: "Johan" })
+    }
+
+    render() {
+        const { name } = this.state;
+        return (
+            <div>
+                <h3>Using Axios in React for API call {name} </h3>
+                <hr />
+            </div>
+        );
+    }
+}
 
 const Blank = () => {
     return (
@@ -11,28 +43,9 @@ const Blank = () => {
                     <div className="card">
                         <div className="card-header">
                             <h3 className="card-title">Title</h3>
-                            <div className="card-tools">
-                                <button
-                                    type="button"
-                                    className="btn btn-tool"
-                                    data-widget="collapse"
-                                    data-toggle="tooltip"
-                                    title="Collapse"
-                                >
-                                    <i className="fa fa-minus" />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-tool"
-                                    data-widget="remove"
-                                    data-toggle="tooltip"
-                                    title="Remove"
-                                >
-                                    <i className="fa fa-times" />
-                                </button>
-                            </div>
                         </div>
                         <div className="card-body">
+                            <PendingProcessesView />
                             Start creating your amazing application!
                         </div>
                         <div className="card-footer">Footer</div>
@@ -42,5 +55,6 @@ const Blank = () => {
         </div>
     );
 };
+
 
 export default Blank;

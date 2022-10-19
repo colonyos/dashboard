@@ -7,7 +7,6 @@ import { useWindowSize } from '@app/hooks/useWindowSize';
 import { calculateWindowSize } from '@app/utils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWindowSize } from '@app/store/reducers/ui';
-
 import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import Workers from '@pages/Workers';
@@ -24,22 +23,15 @@ import Generators from '@pages/Generators';
 import Server from '@pages/Server';
 import SubMenu from '@pages/SubMenu';
 import Profile from '@pages/Profile';
-
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
-
-import Crypto from './colonies/crypto/wasm_exec.js';
-
-let c = new Crypto();
-c.load().then(() => {
-    console.log(c.prvkey())
-})
-
+import ColonyRuntime from './colonies/colonyruntime.js';
 
 const App = () => {
     const windowSize = useWindowSize();
     const screenSize = useSelector((state: any) => state.ui.screenSize);
     const dispatch = useDispatch();
+    //const runtime = new ColonyRuntime("localhost", "50080")
 
     useEffect(() => {
         const size = calculateWindowSize(windowSize.width);

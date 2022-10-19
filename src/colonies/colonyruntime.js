@@ -7,21 +7,33 @@ const Running = 1;
 const Success = 2;
 const Failed = 3;
 
+import App from '@app/App';
+import Crypto from './crypto/crypto.js';
+
+
 class ColonyRuntime {
     constructor(host, port) {
         this.crypto = new Crypto()
         this.host = host
         this.port = port
+        this.loaded = false
     }
 
     load() {
         var crypto = this.crypto
-        let promise = new Promise(function(ok, err) {
-            crypto.load().then(() => {
+        var instance = this
+        if (!instance.loaded) {
+            return new Promise(function(ok, err) {
+                crypto.load().then(() => {
+                    instance.loaded = true
+                    ok()
+                })
+            })
+        } else {
+            return new Promise(function(ok, err) {
                 ok()
             })
-        })
-        return promise
+        }
     }
 
     crypto() {
@@ -43,24 +55,23 @@ class ColonyRuntime {
 
         let promise = new Promise(function(resolve, reject) {
             try {
-                $.ajax({
-                    type: "POST",
-                    url: "http://" + host + ":" + port + "/api",
-                    data: JSON.stringify(rpcMsg),
-                    contentType: 'plain/text',
-                    success: function(response) {
-                        let rpcReplyMsg = JSON.parse(response)
-                        let msg = JSON.parse(atob(JSON.parse(response).payload))
-                        if (rpcReplyMsg.error == true) {
-                            reject(msg)
-                        } else {
-                            resolve(msg)
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        reject(error)
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://" + host + ":" + port + "/api")
+                xhr.send(JSON.stringify(rpcMsg))
+
+                xhr.onload = function() {
+                    let rpcReplyMsg = JSON.parse(xhr.response)
+                    let msg = JSON.parse(atob(JSON.parse(xhr.response).payload))
+                    if (rpcReplyMsg.error == true) {
+                        reject(msg)
+                    } else {
+                        resolve(msg)
                     }
-                })
+                };
+
+                xhr.onerror = function() {
+                    reject("Failed to connect to http://" + host + ":" + port)
+                };
             } catch (e) {
                 reject(e)
             }
@@ -240,3 +251,5 @@ class ColonyRuntime {
         return promise
     }
 }
+
+export default ColonyRuntime;
