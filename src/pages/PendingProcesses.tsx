@@ -42,11 +42,11 @@ class PendingProcessesView extends Component {
         const items = []
         for (let i = 0; i < processes.length; i++) {
             let process = processes[i]
-            //console.log(process)
             items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
                 <td> {process.processid}</td>
                 <td> {process.submissiontime}</td>
-                <td> {process.spec.func} {process.spec.args} </td>
+                <td> {process.spec.func} </td>
+                <td> {process.spec.args} </td>
                 <td> {process.spec.conditions.runtimetype}</td>
             </tr>)
         }
@@ -58,6 +58,7 @@ class PendingProcessesView extends Component {
                         <th>Process Id</th>
                         <th>Submission Time</th>
                         <th>Function</th>
+                        <th>Args</th>
                         <th>Target Runtime Type</th>
                     </tr>
                 </thead>
