@@ -5,6 +5,7 @@ import { global } from '../global'
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { parseTime } from '@app/utils/helpers';
 
 class PendingProcessesView extends Component {
     constructor() {
@@ -40,11 +41,16 @@ class PendingProcessesView extends Component {
 
         const { processes } = this.state;
         const items = []
+        if (processes == null) {
+            return (<h5>No processes found</h5>)
+        }
+
         for (let i = 0; i < processes.length; i++) {
             let process = processes[i]
+
             items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
                 <td> {process.processid}</td>
-                <td> {process.submissiontime}</td>
+                <td> {parseTime(process.submissiontime)}</td>
                 <td> {process.spec.func} </td>
                 <td> {process.spec.args} </td>
                 <td> {process.spec.conditions.runtimetype}</td>

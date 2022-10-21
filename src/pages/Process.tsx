@@ -17,41 +17,15 @@ const StyledContentImage = styled(PfImage)`
   }
 `;
 
-
 class ProcessSpecView extends Component {
     constructor() {
         super();
         this.state = {
-            process: { spec: {} },
         };
     }
 
-    componentDidMount() {
-        let props = this.props
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getProcess(props.processid, global.runtimePrvKey).then((process) => {
-                this.setState({ process: process })
-            })
-            this.interval = setInterval(() => {
-                rt.getProcess(props.processid, global.runtimePrvKey).then((process) => {
-                    this.setState({ process: process })
-                })
-            }, 1000)
-        })
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval)
-    }
-
     render() {
-        let props = this.props
-        const Trigger = (processid) => {
-            props.navigate("/process?processid=" + processid)
-        }
-
-        const { process } = this.state
+        let process = this.props.process
         return (
             <Table striped bordered hover >
                 <tbody>
@@ -88,37 +62,10 @@ class ProcessSpecView extends Component {
 class ProcessView extends Component {
     constructor() {
         super();
-        this.state = {
-            process: { spec: {} },
-        };
-    }
-
-    componentDidMount() {
-        let props = this.props
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getProcess(props.processid, global.runtimePrvKey).then((process) => {
-                this.setState({ process: process })
-            })
-            this.interval = setInterval(() => {
-                rt.getProcess(props.processid, global.runtimePrvKey).then((process) => {
-                    this.setState({ process: process })
-                })
-            }, 1000)
-        })
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval)
     }
 
     render() {
-        let props = this.props
-        const Trigger = (processid) => {
-            props.navigate("/process?processid=" + processid)
-        }
-
-        const { process } = this.state
+        let process = this.props.process
         return (
             <Table striped bordered hover >
                 <tbody>
@@ -183,10 +130,10 @@ const TimelineTab = ({ isActive }: { isActive: boolean }) => {
                             <span> 12:05</span>
                         </span>
                         <h3 className="timeline-header">
-                            Process specifcation submitted by worker
+                            <b>Process specifcation submitted by worker</b>
                         </h3>
                         <div className="timeline-body">
-                            4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
+                            <b>WorkerId:</b> 4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
                         </div>
                     </div>
                 </div>
@@ -199,10 +146,10 @@ const TimelineTab = ({ isActive }: { isActive: boolean }) => {
                             <span> 12:05</span>
                         </span>
                         <h3 className="timeline-header">
-                            Assigned to worker
+                            <b>Assigned to worker</b>
                         </h3>
                         <div className="timeline-body">
-                            4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
+                            <b>WorkerId:</b> 4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
                         </div>
                     </div>
                 </div>
@@ -215,7 +162,7 @@ const TimelineTab = ({ isActive }: { isActive: boolean }) => {
                             <span> 12:05</span>
                         </span>
                         <h3 className="timeline-header">
-                            Process closed as Successful
+                            <b>Process closed as Successful</b>
                         </h3>
                     </div>
                 </div>
@@ -233,44 +180,73 @@ const TimelineTab = ({ isActive }: { isActive: boolean }) => {
 };
 
 
-const Page = () => {
-    let search = window.location.search;
-    let params = new URLSearchParams(search);
-    let processid = params.get('processid');
-    return (
-        <div>
-            <ContentHeader title="Process" />
-            <section className="content">
-                <div className="container-fluid">
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="table-header">Timeline</h3>
-                            <div className="card-body">
-                                <TimelineTab processid={processid} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="table-header">Process Specifcation</h3>
-                            <div className="card-body">
-                                <ProcessSpecView processid={processid} />
-                            </div>
-                        </div>
-                    </div>
+class Page extends Component {
+    constructor() {
+        super();
+        this.state = {
+            process: { spec: {} },
+        };
+    }
 
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="table-header">Process State Information</h3>
-                            <div className="card-body">
-                                <ProcessView processid={processid} />
+    componentDidMount() {
+        let search = window.location.search;
+        let params = new URLSearchParams(search);
+        let processid = params.get('processid');
+
+        let rt = global.runtime
+        rt.load().then(() => {
+            rt.getProcess(processid, global.runtimePrvKey).then((process) => {
+                this.setState({ process: process })
+            })
+            this.interval = setInterval(() => {
+                rt.getProcess(processid, global.runtimePrvKey).then((process) => {
+                    this.setState({ process: process })
+                })
+            }, 1000)
+        })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
+    render() {
+        const { process } = this.state
+        return (
+            <div>
+                <ContentHeader title="Process" />
+                <section className="content">
+                    <div className="container-fluid">
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Timeline</h3>
+                                <div className="card-body">
+                                    <TimelineTab process={process} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Process Specifcation</h3>
+                                <div className="card-body">
+                                    <ProcessSpecView process={process} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Process State Information</h3>
+                                <div className="card-body">
+                                    <ProcessView process={process} />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
-    );
-};
+                </section>
+            </div>
+        );
+    }
+}
 
 export default Page;

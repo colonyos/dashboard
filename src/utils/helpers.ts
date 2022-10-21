@@ -60,3 +60,15 @@ export const state2str = (state) => {
         return "Unknown"
     }
 };
+
+
+export const parseTime = (time) => {
+    let unixTimestamp = Date.parse(time)
+    let date = new Date(unixTimestamp);
+
+    var year = date.getFullYear().toString();
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+
+    return year + "-" + month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+};
