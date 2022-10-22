@@ -5,7 +5,7 @@ import { ContentHeader } from '@components';
 const Blank = () => {
     return (
         <div>
-            <ContentHeader title="Pending workflows" />
+            <ContentHeader title="Waiting workflows" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">

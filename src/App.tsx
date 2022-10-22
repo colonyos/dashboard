@@ -10,12 +10,12 @@ import { setWindowSize } from '@app/store/reducers/ui';
 import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import Workers from '@pages/Workers';
-import PendingProcesses from '@pages/PendingProcesses';
+import WaitingProcesses from '@pages/WaitingProcesses';
 import Process from '@pages/Process';
 import RunningProcesses from '@pages/RunningProcesses';
 import SuccessfulProcesses from '@pages/SuccessfulProcesses';
 import FailedProcesses from '@pages/FailedProcesses';
-import PendingWorkflows from '@pages/PendingWorkflows';
+import WaitingWorkflows from '@pages/WaitingWorkflows';
 import RunningWorkflows from '@pages/RunningWorkflows';
 import SuccessfulWorkflows from '@pages/SuccessfulWorkflows';
 import FailedWorkflows from '@pages/FailedWorkflows';
@@ -51,11 +51,11 @@ const App = () => {
                     <Route path="/" element={<Main />}>
                         <Route path="/workers" element={<Workers />} />
                         <Route path="/process" element={<Process />} />
-                        <Route path="/pendingprocesses" element={<PendingProcesses />} />
+                        <Route path="/waitingprocesses" element={<WaitingProcesses />} />
                         <Route path="/runningprocesses" element={<RunningProcesses />} />
                         <Route path="/successfulprocesses" element={<SuccessfulProcesses />} />
                         <Route path="/failedprocesses" element={<FailedProcesses />} />
-                        <Route path="/pendingworkflows" element={<PendingWorkflows />} />
+                        <Route path="/waitingworkflows" element={<WaitingWorkflows />} />
                         <Route path="/runningworkflows" element={<RunningWorkflows />} />
                         <Route path="/successfulworkflows" element={<SuccessfulWorkflows />} />
                         <Route path="/failedworkflows" element={<FailedWorkflows />} />

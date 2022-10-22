@@ -30,9 +30,9 @@ export const MENU: IMenuItem[] = [
         icon: "fas fa-cube",
         children: [
             {
-                name: "Pending",
+                name: "Waiting",
                 icon: "fa-hourglass",
-                path: '/pendingprocesses',
+                path: '/waitingprocesses',
             },
             {
                 name: "Running",
@@ -56,9 +56,9 @@ export const MENU: IMenuItem[] = [
         icon: "fas fa-cubes",
         children: [
             {
-                name: "Pending",
+                name: "Waiting",
                 icon: "fa-hourglass",
-                path: '/pendingworkflows'
+                path: '/waitingworkflows'
             },
             {
                 name: "Running",

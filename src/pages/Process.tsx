@@ -5,6 +5,12 @@ import { global } from '../global'
 import Table from 'react-bootstrap/Table';
 import { bool2str } from '@app/utils/helpers';
 import { state2str } from '@app/utils/helpers';
+import { attrtype2str } from '@app/utils/helpers';
+import { parseTime } from '@app/utils/helpers';
+import { parseDict } from '@app/utils/helpers';
+import { calcExecTime } from '@app/utils/helpers';
+import { calcWaitTime } from '@app/utils/helpers';
+import { calcRemainingTime } from '@app/utils/helpers';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { PfImage } from '@profabric/react-components';
@@ -16,6 +22,110 @@ const StyledContentImage = styled(PfImage)`
     margin-left: 0;
   }
 `;
+
+const TimelineView = (props, { isActive }: { isActive: boolean }) => {
+    const items = []
+    const endItem = []
+    let process = props.process
+
+    let submissionTime = Date.parse(process.submissiontime)
+    if (submissionTime > 0) {
+        items.push(
+            <div>
+                <i className="fas fa-file bg-info" />
+                <div className="timeline-item">
+                    <span className="time">
+                        <i className="far fa-clock" />
+                        <span> {parseTime(process.submissiontime)}</span>
+                    </span>
+                    <h3 className="timeline-header">
+                        <b>Process Specifcation submitted</b>
+                    </h3>
+                </div>
+            </div>
+        )
+    }
+
+    if (process.isassigned) {
+        items.push(
+            <div>
+                <i className="fas fa-microchip bg-primary" />
+                <div className="timeline-item">
+                    <span className="time">
+                        <i className="far fa-clock" />
+                        <span> {parseTime(process.starttime)}</span>
+                    </span>
+                    <h3 className="timeline-header">
+                        <b>Assigned to Worker</b>
+                    </h3>
+                    <div className="timeline-body">
+                        <b>WorkerId:</b> {process.assignedruntimeid}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    let endTime = Date.parse(process.endtime)
+    if (endTime > 0 && process.state == 2) {
+        items.push(
+            <div>
+                <i className="fas fa-check bg-success" />
+                <div className="timeline-item">
+                    <span className="time">
+                        <i className="far fa-clock" />
+                        <span> {parseTime(process.starttime)}</span>
+                    </span>
+                    <h3 className="timeline-header">
+                        <b>Process closed as Successful</b>
+                    </h3>
+                </div>
+            </div>
+        )
+        endItem.push(
+            <div className="time-label">
+                <span className="bg-success">3 Jan. 2014</span>
+            </div>
+        )
+    } else if (endTime > 0 && process.state == 3) {
+        items.push(
+            <div>
+                <i className="fas fa-skull-crossbones bg-danger" />
+                <div className="timeline-item">
+                    <span className="time">
+                        <i className="far fa-clock" />
+                        <span> {parseTime(process.starttime)}</span>
+                    </span>
+                    <h3 className="timeline-header">
+                        <b>Process closed as Failed</b>
+                    </h3>
+                </div>
+            </div>
+        )
+        endItem.push(
+            <div className="time-label">
+                <span className="bg-danger">3 Jan. 2014</span>
+            </div>
+        )
+    }
+
+    return (
+        <div className={`tab-pane ${isActive ? 'active' : ''}`}>
+            <div className="timeline timeline-inverse">
+                <div className="time-label">
+                    <span className="bg-info">{parseTime(process.submissiontime)}</span>
+                </div>
+
+                {items}
+                {endItem}
+
+                <div>
+                    <i className="far fa-clock bg-gray" />
+                </div>
+            </div>
+        </div>
+    );
+};
 
 class ProcessSpecView extends Component {
     constructor() {
@@ -34,6 +144,22 @@ class ProcessSpecView extends Component {
                         <td>{process.spec.name}</td>
                     </tr>
                     <tr>
+                        <th>Target Colony Id</th>
+                        <td>{process.spec.conditions.colonyid}</td>
+                    </tr>
+                    <tr>
+                        <th>Target Runtime Ids</th>
+                        <td>{process.spec.conditions.runtimeids}</td>
+                    </tr>
+                    <tr>
+                        <th>Target Runtime Type</th>
+                        <td>{process.spec.conditions.runtimetype}</td>
+                    </tr>
+                    <tr>
+                        <th>Dependencies</th>
+                        <td>{process.spec.conditions.dependencies}</td>
+                    </tr>
+                    <tr>
                         <th>Function</th>
                         <td>{process.spec.func}</td>
                     </tr>
@@ -43,15 +169,19 @@ class ProcessSpecView extends Component {
                     </tr>
                     <tr>
                         <th>Max Exec Time</th>
-                        <td>{process.spec.maxexectime}</td>
+                        <td>{process.spec.maxexectime} seconds</td>
                     </tr>
                     <tr>
                         <th>Max Wait Time</th>
-                        <td>{process.spec.maxwaittime}</td>
+                        <td>{process.spec.maxwaittime} seconds</td>
                     </tr>
                     <tr>
                         <th>Max Retries</th>
                         <td>{process.spec.maxretries}</td>
+                    </tr>
+                    <tr>
+                        <th>Environment</th>
+                        <td>{parseDict(process.spec.env)}</td>
                     </tr>
                 </tbody>
             </Table >
@@ -74,32 +204,72 @@ class ProcessView extends Component {
                         <td>{process.processid}</td>
                     </tr>
                     <tr>
+                        <th>ProcessGraphId</th>
+                        <td>{process.processgraphid}</td>
+                    </tr>
+                    <tr>
+                        <th>Children</th>
+                        <td>{process.children}</td>
+                    </tr>
+                    <tr>
                         <th>Input</th>
-                        <td>{process.input}</td>
+                        <td>{process.in}</td>
                     </tr>
                     <tr>
                         <th>Output</th>
-                        <td>{process.output}</td>
+                        <td>{process.out}</td>
                     </tr>
                     <tr>
-                        <th>Assigned RuntimeId</th>
-                        <td>{process.assignedruntimeid}</td>
+                        <th>Errors</th>
+                        <td>{process.errors}</td>
                     </tr>
                     <tr>
                         <th>Assigned</th>
                         <td>{bool2str(process.isassigned)}</td>
                     </tr>
                     <tr>
+                        <th>Assigned RuntimeId</th>
+                        <td>{process.assignedruntimeid}</td>
+                    </tr>
+                    <tr>
                         <th>State</th>
                         <td>{state2str(process.state)}</td>
                     </tr>
                     <tr>
+                        <th>Submission time</th>
+                        <td>{parseTime(process.submissiontime)}</td>
+                    </tr>
+                    <tr>
+                        <th>Start time</th>
+                        <td>{parseTime(process.starttime)}</td>
+                    </tr>
+                    <tr>
+                        <th>End time</th>
+                        <td>{parseTime(process.endtime)}</td>
+                    </tr>
+                    <tr>
+                        <th>Waiting Time</th>
+                        <td>{calcWaitTime(process.state, process.submissiontime, process.starttime)} seconds</td>
+                    </tr>
+                    <tr>
                         <th>Wait Deadline</th>
-                        <td>{process.waitdeadline}</td>
+                        <td>{parseTime(process.waitdeadline)}</td>
+                    </tr>
+                    <tr>
+                        <th>Remaining Waiting Time</th>
+                        <td>{calcRemainingTime(process.state, 0, process.waitdeadline)} seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Execution Time</th>
+                        <td>{calcExecTime(process.state, process.starttime, process.endtime)} seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Remaining Execution Time</th>
+                        <td>{calcRemainingTime(process.state, 1, process.execdeadline)} seconds</td>
                     </tr>
                     <tr>
                         <th>Execution Deadline</th>
-                        <td>{process.execdeadline}</td>
+                        <td>{parseTime(process.execdeadline)}</td>
                     </tr>
                     <tr>
                         <th>Retries</th>
@@ -115,76 +285,71 @@ class ProcessView extends Component {
     }
 }
 
-const TimelineTab = ({ isActive }: { isActive: boolean }) => {
-    return (
-        <div className={`tab-pane ${isActive ? 'active' : ''}`}>
-            <div className="timeline timeline-inverse">
-                <div className="time-label">
-                    <span className="bg-info">10 Feb. 2014</span>
-                </div>
-                <div>
-                    <i className="fas fa-microchip bg-primary" />
-                    <div className="timeline-item">
-                        <span className="time">
-                            <i className="far fa-clock" />
-                            <span> 12:05</span>
-                        </span>
-                        <h3 className="timeline-header">
-                            <b>Process specifcation submitted by worker</b>
-                        </h3>
-                        <div className="timeline-body">
-                            <b>WorkerId:</b> 4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
-                        </div>
-                    </div>
-                </div>
+class AttributeView extends Component {
+    constructor() {
+        super();
+        this.state = {
+        };
+    }
 
-                <div>
-                    <i className="fas fa-microchip bg-primary" />
-                    <div className="timeline-item">
-                        <span className="time">
-                            <i className="far fa-clock" />
-                            <span> 12:05</span>
-                        </span>
-                        <h3 className="timeline-header">
-                            <b>Assigned to worker</b>
-                        </h3>
-                        <div className="timeline-body">
-                            <b>WorkerId:</b> 4eff750a73b91d4f449e2e9932640c4352c842e6514c023870f79046c4e81dcd
-                        </div>
-                    </div>
-                </div>
+    render() {
+        let process = this.props.process
 
-                <div>
-                    <i className="fas fa-microchip bg-primary" />
-                    <div className="timeline-item">
-                        <span className="time">
-                            <i className="far fa-clock" />
-                            <span> 12:05</span>
-                        </span>
-                        <h3 className="timeline-header">
-                            <b>Process closed as Successful</b>
-                        </h3>
-                    </div>
-                </div>
-
-
-                <div className="time-label">
-                    <span className="bg-success">3 Jan. 2014</span>
-                </div>
-                <div>
-                    <i className="far fa-clock bg-gray" />
-                </div>
-            </div>
-        </div>
-    );
-};
-
+        const items = []
+        if (process.attributes.length > 0) {
+            for (let i in process.attributes) {
+                let attr = process.attributes[i]
+                items.push(
+                    <Table striped bordered hover >
+                        <tbody>
+                            <tr>
+                                <th>Key</th>
+                                <td>{attr.key}</td>
+                            </tr>
+                            <tr>
+                                <th>Value</th>
+                                <td>{attr.value}</td>
+                            </tr>
+                            <tr>
+                                <th>Attribute Type</th>
+                                <td>{attrtype2str(attr.attributetype)}</td>
+                            </tr>
+                            <tr>
+                                <th>AttributeId</th>
+                                <td>{attr.attributeid}</td>
+                            </tr>
+                            <tr>
+                                <th>Target ProcessId</th>
+                                <td>{attr.targetid}</td>
+                            </tr>
+                            <tr>
+                                <th>Target ColonyId</th>
+                                <td>{attr.targetcolonyid}</td>
+                            </tr>
+                            <tr>
+                                <th>Target ProcessGraphId</th>
+                                <td>{attr.targetprocessgraphid}</td>
+                            </tr>
+                        </tbody >
+                    </Table>
+                )
+            }
+            return (
+                <div> {items} </div>
+            );
+        } else {
+            return (
+                <h5>No attributes found</h5>
+            )
+        }
+    }
+}
 
 class Page extends Component {
     constructor() {
         super();
         this.state = {
-            process: { spec: {} },
+            process: { attributes: {}, spec: { conditions: {} } },
         };
     }
 
@@ -221,7 +386,7 @@ class Page extends Component {
                             <div className="card-header">
                                 <h3 className="table-header">Timeline</h3>
                                 <div className="card-body">
-                                    <TimelineTab process={process} />
+                                    <TimelineView process={process} />
                                 </div>
                             </div>
                         </div>
@@ -236,9 +401,18 @@ class Page extends Component {
 
                         <div className="card">
                             <div className="card-header">
-                                <h3 className="table-header">Process State Information</h3>
+                                <h3 className="table-header">Process Information</h3>
                                 <div className="card-body">
                                     <ProcessView process={process} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Attributes</h3>
+                                <div className="card-body">
+                                    <AttributeView process={process} />
                                 </div>
                             </div>
                         </div>

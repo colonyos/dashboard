@@ -1,3 +1,5 @@
+import { argv0 } from "process";
+
 export const sleep = (time: number) =>
     new Promise((res) => setTimeout(res, time));
 
@@ -44,12 +46,26 @@ export const bool2str = (b) => {
     if (b) {
         return "true"
     }
-    return false
+    return "false"
 };
+
+export const attrtype2str = (attrtype) => {
+    if (attrtype == 0) {
+        return "In"
+    } else if (attrtype == 1) {
+        return "Out"
+    } else if (attrtype == 2) {
+        return "Err"
+    } else if (attrtype == 3) {
+        return "Env"
+    } else {
+        return "Unknown"
+    }
+}
 
 export const state2str = (state) => {
     if (state == 0) {
-        return "Pending"
+        return "Waiting"
     } else if (state == 1) {
         return "Running"
     } else if (state == 2) {
@@ -64,11 +80,50 @@ export const state2str = (state) => {
 
 export const parseTime = (time) => {
     let unixTimestamp = Date.parse(time)
-    let date = new Date(unixTimestamp);
+    if (unixTimestamp < 0) {
+        return "n/a"
+    }
 
+    let date = new Date(unixTimestamp);
     var year = date.getFullYear().toString();
     var month = date.toLocaleString("default", { month: "2-digit" });
     var day = date.toLocaleString("default", { day: "2-digit" });
-
     return year + "-" + month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 };
+
+export const calcWaitTime = (state, submissiontime, starttime) => {
+    if (state == 0) { // Waiting 
+        return (Date.now() - Date.parse(submissiontime)) / 1000
+    } else if (state == 1 || state == 2 || state == 3) { // Successful or Failed 
+        return (Date.parse(starttime) - Date.parse(submissiontime)) / 1000
+    }
+}
+
+export const calcExecTime = (state, starttime, endtime) => {
+    if (state == 0) { // Waiting 
+        return 0
+    } else if (state == 1) { // Running 
+        return (Date.now() - Date.parse(starttime)) / 1000
+    } else if (state == 2 || state == 3) { // Successful or Failed 
+        return (Date.parse(endtime) - Date.parse(starttime)) / 1000
+    }
+}
+
+export const calcRemainingTime = (currentState, state, deadline) => {
+    let d = Date.parse(deadline)
+    if (currentState == state && d > 0) { // Running 
+        return (d - Date.now()) / 1000
+    } else {
+        return "n/a"
+    }
+}
+
+
+export const parseDict = (dict) => {
+    let str = ""
+    for (const key in dict) {
+        str += key + ":" + dict[key] + " "
+    }
+
+    return str
+}
