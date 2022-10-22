@@ -1,20 +1,22 @@
 import { SmallBox } from '@app/components';
-import React from 'react';
 import { ContentHeader } from '@components';
+import React, { Component } from "react"
+import { global } from '../global'
 
-const Dashboard = () => {
+const DashboardView = (props) => {
+    let stats = props.stats
+
     return (
         <div>
             <ContentHeader title="Dashboard" />
-
             <section className="content">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-secondary">
                                 <div className="inner">
-                                    <h3>150</h3>
-                                    <p>Pending Processes</p>
+                                    <h3>{stats.waitingprocesses}</h3>
+                                    <p>Waiting Processes</p>
                                 </div>
                                 <div className="icon">
                                     <i className="ion ion-android-time" />
@@ -24,7 +26,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-info">
                                 <div className="inner">
-                                    <h3>15</h3>
+                                    <h3>{stats.runningprocesses}</h3>
                                     <p>Running Processes</p>
                                 </div>
                                 <div className="icon">
@@ -35,7 +37,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-success">
                                 <div className="inner">
-                                    <h3>1500</h3>
+                                    <h3>{stats.successfulprocesses}</h3>
                                     <p>Successful Processes</p>
                                 </div>
                                 <div className="icon">
@@ -46,7 +48,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-danger">
                                 <div className="inner">
-                                    <h3>10</h3>
+                                    <h3>{stats.failedprocesses}</h3>
                                     <p>Failed Processes</p>
                                 </div>
                                 <div className="icon">
@@ -61,8 +63,8 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-secondary">
                                 <div className="inner">
-                                    <h3>10</h3>
-                                    <p>Pending Workflows</p>
+                                    <h3>{stats.waitingworkflows}</h3>
+                                    <p>Waiting Workflows</p>
                                 </div>
                                 <div className="icon">
                                     <i className="ion ion-android-time" />
@@ -72,7 +74,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-info">
                                 <div className="inner">
-                                    <h3>5</h3>
+                                    <h3>{stats.runningworkflows}</h3>
                                     <p>Running Workflows</p>
                                 </div>
                                 <div className="icon">
@@ -83,7 +85,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-success">
                                 <div className="inner">
-                                    <h3>150</h3>
+                                    <h3>{stats.successfulworkflows}</h3>
                                     <p>Successful Workflows</p>
                                 </div>
                                 <div className="icon">
@@ -94,7 +96,7 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-danger">
                                 <div className="inner">
-                                    <h3>1</h3>
+                                    <h3>{stats.failedworkflows}</h3>
                                     <p>Failed Workflows</p>
                                 </div>
                                 <div className="icon">
@@ -109,8 +111,8 @@ const Dashboard = () => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-primary">
                                 <div className="inner">
-                                    <h3>100</h3>
-                                    <p>Workers</p>
+                                    <h3>{stats.runtimes}</h3>
+                                    <p>Registered Workers</p>
                                 </div>
                                 <div className="icon">
                                     <i className="ion ion-android-time" />
@@ -124,4 +126,43 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+class Page extends Component {
+    constructor() {
+        super();
+        this.state = {
+            stats: {},
+        };
+    }
+
+    componentDidMount() {
+        let search = window.location.search;
+        let params = new URLSearchParams(search);
+        let processid = params.get('processid');
+
+        let rt = global.runtime
+        rt.load().then(() => {
+            console.log(rt)
+            rt.getColonyStats(global.colonyId, global.runtimePrvKey).then((stats) => {
+                this.setState({ stats: stats })
+            })
+            this.interval = setInterval(() => {
+                rt.getColonyStats(global.colonyId, global.runtimePrvKey).then((stats) => {
+                    this.setState({ stats: stats })
+                })
+            }, 1000)
+        })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
+    render() {
+        const { stats } = this.state
+        return (
+            <DashboardView stats={stats} />
+        );
+    }
+}
+
+export default Page;

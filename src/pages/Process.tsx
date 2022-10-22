@@ -84,7 +84,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
         )
         endItem.push(
             <div className="time-label">
-                <span className="bg-success">3 Jan. 2014</span>
+                <span className="bg-success">{parseTime(process.endtime)}</span>
             </div>
         )
     } else if (endTime > 0 && process.state == 3) {
@@ -94,7 +94,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                 <div className="timeline-item">
                     <span className="time">
                         <i className="far fa-clock" />
-                        <span> {parseTime(process.starttime)}</span>
+                        <span> {parseTime(process.endtime)}</span>
                     </span>
                     <h3 className="timeline-header">
                         <b>Process closed as failed</b>
@@ -200,11 +200,11 @@ class ProcessView extends Component {
             <Table striped bordered hover >
                 <tbody>
                     <tr>
-                        <th>ProcessId</th>
+                        <th>Process Id</th>
                         <td>{process.processid}</td>
                     </tr>
                     <tr>
-                        <th>ProcessGraphId</th>
+                        <th>ProcessGraph Id</th>
                         <td>{process.processgraphid}</td>
                     </tr>
                     <tr>
@@ -228,7 +228,7 @@ class ProcessView extends Component {
                         <td>{bool2str(process.isassigned)}</td>
                     </tr>
                     <tr>
-                        <th>Assigned RuntimeId</th>
+                        <th>Assigned Runtime Id</th>
                         <td>{process.assignedruntimeid}</td>
                     </tr>
                     <tr>
@@ -315,19 +315,19 @@ class AttributeView extends Component {
                                 <td>{attrtype2str(attr.attributetype)}</td>
                             </tr>
                             <tr>
-                                <th>AttributeId</th>
+                                <th>Attribute Id</th>
                                 <td>{attr.attributeid}</td>
                             </tr>
                             <tr>
-                                <th>Target ProcessId</th>
+                                <th>Target Process Id</th>
                                 <td>{attr.targetid}</td>
                             </tr>
                             <tr>
-                                <th>Target ColonyId</th>
+                                <th>Target Colony Id</th>
                                 <td>{attr.targetcolonyid}</td>
                             </tr>
                             <tr>
-                                <th>Target ProcessGraphId</th>
+                                <th>Target ProcessGraph Id</th>
                                 <td>{attr.targetprocessgraphid}</td>
                             </tr>
                         </tbody >

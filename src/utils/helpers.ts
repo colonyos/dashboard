@@ -77,6 +77,17 @@ export const state2str = (state) => {
     }
 };
 
+export const rtstate2str = (state) => {
+    if (state == 0) {
+        return "Pending"
+    } else if (state == 1) {
+        return "Approved"
+    } else if (state == 2) {
+        return "Rejected"
+    } else {
+        return "Unknown"
+    }
+};
 
 export const parseTime = (time) => {
     let unixTimestamp = Date.parse(time)
@@ -117,7 +128,6 @@ export const calcRemainingTime = (currentState, state, deadline) => {
         return "n/a"
     }
 }
-
 
 export const parseDict = (dict) => {
     let str = ""

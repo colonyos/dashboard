@@ -10,7 +10,6 @@ const Failed = 3;
 import App from '@app/App';
 import Crypto from './crypto/crypto.js';
 
-
 class ColonyRuntime {
     constructor(host, port) {
         this.crypto = new Crypto()
@@ -114,6 +113,15 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvkey)
     }
 
+    getRuntimes(colonyid, prvkey) {
+        var msg = {
+            "msgtype": "getruntimesmsg",
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
     rejectRuntime(runtimeid, prvkey) {
         var msg = {
             "msgtype": "rejectruntimemsg",
@@ -206,6 +214,15 @@ class ColonyRuntime {
         }
 
         msg.msgtype = "closefailedmsg"
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
+    getColonyStats(colonyId, prvkey) {
+        var msg = {
+            "msgtype": "getcolonystatsmsg",
+            "colonyid": colonyId
+        }
+
         return this.sendRPCMsg(msg, prvkey)
     }
 
