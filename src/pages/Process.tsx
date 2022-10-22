@@ -39,7 +39,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.submissiontime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Process Specifcation submitted</b>
+                        <b>Process specifcation submitted</b>
                     </h3>
                 </div>
             </div>
@@ -56,7 +56,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.starttime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Assigned to Worker</b>
+                        <b>Assigned to worker</b>
                     </h3>
                     <div className="timeline-body">
                         <b>WorkerId:</b> {process.assignedruntimeid}
@@ -77,7 +77,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.starttime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Process closed as Successful</b>
+                        <b>Process closed as successful</b>
                     </h3>
                 </div>
             </div>
@@ -97,14 +97,14 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.starttime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Process closed as Failed</b>
+                        <b>Process closed as failed</b>
                     </h3>
                 </div>
             </div>
         )
         endItem.push(
             <div className="time-label">
-                <span className="bg-danger">3 Jan. 2014</span>
+                <span className="bg-danger">{parseTime(process.endtime)}</span>
             </div>
         )
     }
