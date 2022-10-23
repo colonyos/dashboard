@@ -39,7 +39,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.submissiontime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Process specifcation submitted</b>
+                        <b>Process specification submitted</b>
                     </h3>
                 </div>
             </div>
@@ -65,6 +65,8 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
             </div>
         )
     }
+
+    console.log(process)
 
     let endTime = Date.parse(process.endtime)
     if (endTime > 0 && process.state == 2) {
@@ -236,20 +238,20 @@ class ProcessView extends Component {
                         <td>{state2str(process.state)}</td>
                     </tr>
                     <tr>
-                        <th>Submission time</th>
+                        <th>Submission Time</th>
                         <td>{parseTime(process.submissiontime)}</td>
                     </tr>
                     <tr>
-                        <th>Start time</th>
+                        <th>Start Time</th>
                         <td>{parseTime(process.starttime)}</td>
                     </tr>
                     <tr>
-                        <th>End time</th>
+                        <th>End Time</th>
                         <td>{parseTime(process.endtime)}</td>
                     </tr>
                     <tr>
                         <th>Waiting Time</th>
-                        <td>{calcWaitTime(process.state, process.submissiontime, process.starttime)} seconds</td>
+                        <td>{calcWaitTime(process.state, process.submissiontime, process.starttime, process.endtime)} seconds</td>
                     </tr>
                     <tr>
                         <th>Wait Deadline</th>

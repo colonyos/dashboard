@@ -226,6 +226,46 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvkey)
     }
 
+    getWorkflows(colonyid, count, state, prvkey) {
+        var msg = {
+            "msgtype": "getprocessgraphsmsg",
+            "count": count,
+            "state": state,
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
+    getWorkflow(processgraphid, prvkey) {
+        var msg = {
+            "msgtype": "getprocessgraphmsg",
+            "processgraphid": processgraphid,
+        }
+
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
+    getCrons(colonyid, prvkey) {
+        var msg = {
+            "msgtype": "getcronsmsg",
+            "count": 100,
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
+    getGenerators(colonyid, prvkey) {
+        var msg = {
+            "msgtype": "getgeneratorsmsg",
+            "count": 100,
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvkey)
+    }
+
     subscribeProcesses(runtimetype, timeout, state, prvkey, callback) {
         var msg = {
             "msgtype": "subscribeprocessesmsg",

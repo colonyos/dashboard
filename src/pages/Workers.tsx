@@ -37,7 +37,7 @@ class WorkersView extends Component {
         const { runtimes } = this.state;
         const items = []
         if (runtimes == null) {
-            return (<h5>No runtimes found</h5>)
+            return (<h5>No workers found</h5>)
         }
 
         for (let i = 0; i < runtimes.length; i++) {
@@ -76,7 +76,7 @@ class WorkersView extends Component {
 const Page = () => {
     return (
         <div>
-            <ContentHeader title="Registered Workers" />
+            <ContentHeader title="Registered workers" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">

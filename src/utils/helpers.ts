@@ -102,11 +102,16 @@ export const parseTime = (time) => {
     return year + "-" + month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 };
 
-export const calcWaitTime = (state, submissiontime, starttime) => {
+export const calcWaitTime = (state, submissiontime, starttime, endtime) => {
     if (state == 0) { // Waiting 
         return (Date.now() - Date.parse(submissiontime)) / 1000
     } else if (state == 1 || state == 2 || state == 3) { // Successful or Failed 
-        return (Date.parse(starttime) - Date.parse(submissiontime)) / 1000
+        let s = Date.parse(starttime)
+        if (s > 0) {
+            return (Date.parse(starttime) - Date.parse(submissiontime)) / 1000
+        } else {
+            return (Date.parse(endtime) - Date.parse(submissiontime)) / 1000
+        }
     }
 }
 
@@ -116,7 +121,12 @@ export const calcExecTime = (state, starttime, endtime) => {
     } else if (state == 1) { // Running 
         return (Date.now() - Date.parse(starttime)) / 1000
     } else if (state == 2 || state == 3) { // Successful or Failed 
-        return (Date.parse(endtime) - Date.parse(starttime)) / 1000
+        let s = Date.parse(starttime)
+        if (s > 0) {
+            return (Date.parse(endtime) - s) / 1000
+        } else {
+            return 0
+        }
     }
 }
 

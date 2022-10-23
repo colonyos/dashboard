@@ -7,7 +7,7 @@ const Page = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <ContentHeader title="Waiting processes" />
+            <ContentHeader title="Waiting Processes" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">

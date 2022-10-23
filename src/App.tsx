@@ -10,8 +10,8 @@ import { setWindowSize } from '@app/store/reducers/ui';
 import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import Workers from '@pages/Workers';
-import WaitingProcesses from '@pages/WaitingProcesses';
 import Process from '@pages/Process';
+import WaitingProcesses from '@pages/WaitingProcesses';
 import RunningProcesses from '@pages/RunningProcesses';
 import SuccessfulProcesses from '@pages/SuccessfulProcesses';
 import FailedProcesses from '@pages/FailedProcesses';
@@ -19,6 +19,7 @@ import WaitingWorkflows from '@pages/WaitingWorkflows';
 import RunningWorkflows from '@pages/RunningWorkflows';
 import SuccessfulWorkflows from '@pages/SuccessfulWorkflows';
 import FailedWorkflows from '@pages/FailedWorkflows';
+import Workflow from '@pages/Workflow';
 import Cron from '@pages/Cron';
 import Generators from '@pages/Generators';
 import Server from '@pages/Server';
@@ -51,6 +52,7 @@ const App = () => {
                     <Route path="/" element={<Main />}>
                         <Route path="/workers" element={<Workers />} />
                         <Route path="/process" element={<Process />} />
+                        <Route path="/workflow" element={<Workflow />} />
                         <Route path="/waitingprocesses" element={<WaitingProcesses />} />
                         <Route path="/runningprocesses" element={<RunningProcesses />} />
                         <Route path="/successfulprocesses" element={<SuccessfulProcesses />} />

@@ -7,7 +7,7 @@ const Page = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <ContentHeader title="Successful processes" />
+            <ContentHeader title="Successful Processes" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">
