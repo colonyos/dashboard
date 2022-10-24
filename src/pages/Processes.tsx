@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { global } from '../global'
 import Table from 'react-bootstrap/Table';
 import { parseTime } from '@app/utils/helpers';
+import { parseArr } from '@app/utils/helpers';
 
 class ProcessesView extends Component {
     constructor() {
@@ -50,7 +51,7 @@ class ProcessesView extends Component {
                 <td> {process.processid}</td>
                 <td> {parseTime(process.submissiontime)}</td>
                 <td> {process.spec.func} </td>
-                <td> {process.spec.args} </td>
+                <td> {parseArr(process.spec.args)} </td>
                 <td> {process.spec.conditions.runtimetype}</td>
             </tr>)
         }

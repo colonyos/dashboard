@@ -97,9 +97,24 @@ export const parseTime = (time) => {
 
     let date = new Date(unixTimestamp);
     var year = date.getFullYear().toString();
-    var month = date.toLocaleString("default", { month: "2-digit" });
-    var day = date.toLocaleString("default", { day: "2-digit" });
-    return year + "-" + month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    var month = date.toLocaleString("default", { month: "2-digit" })
+    var day = date.toLocaleString("default", { day: "2-digit" })
+
+    let hours = date.getHours()
+    if (hours < 10) {
+        hours = "0" + hours
+    }
+
+    let minutes = date.getMinutes()
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+
+    let seconds = date.getSeconds()
+    if (seconds < 10) {
+        seconds = "0" + seconds
+    }
+    return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 };
 
 export const calcWaitTime = (state, submissiontime, starttime, endtime) => {
@@ -143,6 +158,19 @@ export const parseDict = (dict) => {
     let str = ""
     for (const key in dict) {
         str += key + ":" + dict[key] + " "
+    }
+
+    return str
+}
+
+export const parseArr = (arr) => {
+    let str = ""
+    for (const i in arr) {
+        str += arr[i] + ", "
+    }
+
+    if (str.length > 1) {
+        str = str.slice(0, -2);
     }
 
     return str
