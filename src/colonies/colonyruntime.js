@@ -39,7 +39,7 @@ class ColonyRuntime {
         return this.crypto
     }
 
-    sendRPCMsg(msg, prvkey) {
+    sendRPCMsg(msg, prvKey) {
         let rpcMsg = {
             "payloadtype": msg.msgtype,
             "payload": "",
@@ -47,7 +47,7 @@ class ColonyRuntime {
         }
 
         rpcMsg.payload = btoa(JSON.stringify(msg))
-        rpcMsg.signature = this.crypto.sign(rpcMsg.payload, prvkey)
+        rpcMsg.signature = this.crypto.sign(rpcMsg.payload, prvKey)
 
         var host = this.host
         var port = this.port
@@ -78,88 +78,88 @@ class ColonyRuntime {
         return promise
     }
 
-    add_colony(colony, prvkey) {
+    add_colony(colony, prvKey) {
         var msg = {
             "msgtype": "addcolonymsg",
             "colony": colony
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getColonies(prvkey) {
+    getColonies(prvKey) {
         var msg = {
             "msgtype": "getcoloniesmsg"
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getColony(colonyid, prvkey) {
+    getColony(colonyid, prvKey) {
         var msg = {
             "msgtype": "getcolonymsg",
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    addRuntime(runtime, prvkey) {
+    addRuntime(runtime, prvKey) {
         var msg = {
             "msgtype": "addruntimemsg",
             "runtime": runtime
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getRuntimes(colonyid, prvkey) {
+    getRuntimes(colonyid, prvKey) {
         var msg = {
             "msgtype": "getruntimesmsg",
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    rejectRuntime(runtimeid, prvkey) {
+    rejectRuntime(runtimeid, prvKey) {
         var msg = {
             "msgtype": "rejectruntimemsg",
             "runtimeid": runtimeid
         }
 
-        return this.sendRPMsg(msg, prvkey)
+        return this.sendRPMsg(msg, prvKey)
     }
 
-    approveRuntime(runtimeid, prvkey) {
+    approveRuntime(runtimeid, prvKey) {
         var msg = {
             "msgtype": "approveruntimemsg",
             "runtimeid": runtimeid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    submitProcessSpec(spec, prvkey) {
+    submitProcessSpec(spec, prvKey) {
         var msg = {
             "msgtype": "submitprocessespecmsg",
             "spec": spec
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getProcess(processId, prvkey) {
+    getProcess(processId, prvKey) {
         var msg = {
             "msgtype": "getprocessmsg",
             "processid": processId
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
 
-    getProcesses(colonyId, count, state, prvkey) {
+    getProcesses(colonyId, count, state, prvKey) {
         var msg = {
             "msgtype": "getprocessesmsg",
             "colonyid": colonyId,
@@ -167,10 +167,10 @@ class ColonyRuntime {
             "state": state
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    assign(colonyid, timeout, prvkey) {
+    assign(colonyid, timeout, prvKey) {
         var msg = {
             "msgtype": "assignprocessmsg",
             "latest": false,
@@ -178,10 +178,10 @@ class ColonyRuntime {
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    assignLatest(colonyid, timeout, prvkey) {
+    assignLatest(colonyid, timeout, prvKey) {
         var msg = {
             "msgtype": "assignprocessmsg",
             "latest": true,
@@ -189,10 +189,10 @@ class ColonyRuntime {
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    addAttribute(attribute, prvkey) {
+    addAttribute(attribute, prvKey) {
         attribute.attributetype = output
 
         var msg = {
@@ -200,33 +200,33 @@ class ColonyRuntime {
             "attribute": attribute
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    closeProcess(processid, successful, prvkey) {
+    closeProcess(processid, successful, prvKey) {
         var msg = {
             "msgtype": "closesuccessfulmsg",
             "processid": processid
         }
 
         if (successful) {
-            return this.sendRPCMsg(msg, prvkey)
+            return this.sendRPCMsg(msg, prvKey)
         }
 
         msg.msgtype = "closefailedmsg"
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getColonyStats(colonyId, prvkey) {
+    getColonyStats(colonyId, prvKey) {
         var msg = {
             "msgtype": "getcolonystatsmsg",
             "colonyid": colonyId
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getWorkflows(colonyid, count, state, prvkey) {
+    getWorkflows(colonyid, count, state, prvKey) {
         var msg = {
             "msgtype": "getprocessgraphsmsg",
             "count": count,
@@ -234,39 +234,55 @@ class ColonyRuntime {
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getWorkflow(processgraphid, prvkey) {
+    getWorkflow(processgraphid, prvKey) {
         var msg = {
             "msgtype": "getprocessgraphmsg",
             "processgraphid": processgraphid,
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getCrons(colonyid, prvkey) {
+    getCrons(colonyid, prvKey) {
         var msg = {
             "msgtype": "getcronsmsg",
             "count": 100,
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    getGenerators(colonyid, prvkey) {
+    getGenerators(colonyid, prvKey) {
         var msg = {
             "msgtype": "getgeneratorsmsg",
             "count": 100,
             "colonyid": colonyid
         }
 
-        return this.sendRPCMsg(msg, prvkey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
-    subscribeProcesses(runtimetype, timeout, state, prvkey, callback) {
+    getClusterInfo(serverPrvKey) {
+        var msg = {
+            "msgtype": "getclustermsg"
+        }
+
+        return this.sendRPCMsg(msg, serverPrvKey)
+    }
+
+    getServerVersion() {
+        var msg = {
+            "msgtype": "versionmsg"
+        }
+
+        return this.sendRPCMsg(msg, "")
+    }
+
+    subscribeProcesses(runtimetype, timeout, state, prvKey, callback) {
         var msg = {
             "msgtype": "subscribeprocessesmsg",
             "runtimetype": runtimetype,
@@ -281,7 +297,7 @@ class ColonyRuntime {
         }
 
         rpcMsg.payload = btoa(JSON.stringify(msg))
-        rpcMsg.signature = this.crypto.sign(rpcMsg.payload, prvkey)
+        rpcMsg.signature = this.crypto.sign(rpcMsg.payload, prvKey)
 
         let socket = new WebSocket("ws://" + this.host + ":" + this.port + "/pubsub");
 

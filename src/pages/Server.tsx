@@ -1,46 +1,173 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { Component } from "react";
+import { global } from '../global'
+import Table from 'react-bootstrap/Table';
+import { parseTime } from '@app/utils/helpers';
+import { bool2str } from '@app/utils/helpers';
 import { ContentHeader } from '@components';
 
-const Blank = () => {
-    return (
-        <div>
-            <ContentHeader title="Server" />
-            <section className="content">
-                <div className="container-fluid">
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">Title</h3>
-                            <div className="card-tools">
-                                <button
-                                    type="button"
-                                    className="btn btn-tool"
-                                    data-widget="collapse"
-                                    data-toggle="tooltip"
-                                    title="Collapse"
-                                >
-                                    <i className="fa fa-minus" />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-tool"
-                                    data-widget="remove"
-                                    data-toggle="tooltip"
-                                    title="Remove"
-                                >
-                                    <i className="fa fa-times" />
-                                </button>
+class ServerInfoView extends Component {
+    constructor() {
+        super();
+        this.state = {
+            cluster: {}
+        };
+    }
+
+    render() {
+        let serverInfo = this.props.serverInfo
+        console.log(serverInfo)
+
+        return (
+            <Table striped bordered hover >
+                <tbody>
+                    <tr>
+                        <th>Host</th>
+                        <td>{global.host}</td>
+                    </tr>
+                    <tr>
+                        <th>Port</th>
+                        <td>{global.port}</td>
+                    </tr>
+                    <tr>
+                        <th>Build Version</th>
+                        <td>{serverInfo.buildversion}</td>
+                    </tr>
+                    <tr>
+                        <th>Build Time</th>
+                        <td>{parseTime(serverInfo.buildtime)}</td>
+                    </tr>
+                </tbody>
+            </Table >
+        );
+    }
+}
+
+class ClusterView extends Component {
+    constructor() {
+        super();
+        this.state = {
+            cluster: {}
+        };
+    }
+
+    render() {
+        let cluster = this.props.cluster
+
+        console.log(cluster)
+
+        const items = []
+        if (cluster.nodes.length > 0) {
+            for (let i in cluster.nodes) {
+                let node = cluster.nodes[i]
+                let leader = "no"
+                if (node.name == cluster.leader.name) {
+                    leader = "yes"
+                }
+                items.push(
+                    <Table striped bordered hover >
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Leader</th>
+                                <th>Host</th>
+                                <th>API Port</th>
+                                <th>Etcd Port</th>
+                                <th>Etcd Peer Port</th>
+                                <th>Relay Port</th>
+                            </tr>
+                            <tr>
+                                <td>{node.name}</td>
+                                <td>{leader}</td>
+                                <td>{node.host}</td>
+                                <td>{node.apiport}</td>
+                                <td>{node.port}</td>
+                                <td>{node.peerport}</td>
+                                <td>{node.relayport}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                )
+            }
+            return (
+                <div> {items} </div>
+            );
+        } else {
+            return (
+                <h5>No crons found</h5>
+            )
+        }
+    }
+}
+
+class Page extends Component {
+    constructor() {
+        super();
+        this.state = {
+            cluster: { nodes: [] },
+            serverInfo: {}
+        };
+    }
+
+    componentDidMount() {
+        let rt = global.runtime
+        let cluster = {}
+        rt.load().then(() => {
+            rt.getClusterInfo(global.serverPrvKey).then((c) => {
+                cluster = c
+            }).then(() => {
+                return rt.getServerVersion()
+            }).then((serverInfo) => {
+                this.setState({ serverInfo: serverInfo, cluster: cluster })
+            }).catch((err) => {
+                console.log(err)
+            })
+            this.interval = setInterval(() => {
+                rt.getClusterInfo(global.serverPrvKey).then((c) => {
+                    cluster = c
+                }).then(() => {
+                    return rt.getServerVersion()
+                }).then((serverInfo) => {
+                    this.setState({ serverInfo: serverInfo, cluster: cluster })
+                }).catch((err) => {
+                    console.log(err)
+                })
+            }, 1000)
+        })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
+    render() {
+        const { serverInfo, cluster } = this.state
+        return (
+            <div>
+                <ContentHeader title="Colonies Server Info" />
+                <section className="content">
+                    <div className="container-fluid">
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Colonies Server Info</h3>
+                                <div className="card-body">
+                                    <ServerInfoView serverInfo={serverInfo} />
+                                </div>
                             </div>
                         </div>
-                        <div className="card-body">
-                            Start creating your amazing application!
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Colonies Cluster Nodes</h3>
+                                <div className="card-body">
+                                    <ClusterView cluster={cluster} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="card-footer">Footer</div>
                     </div>
-                </div>
-            </section>
-        </div>
-    );
-};
+                </section>
+            </div>
+        );
+    }
+}
 
-export default Blank;
+export default Page;
