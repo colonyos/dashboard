@@ -2,6 +2,8 @@ import ColonyRuntime from './colonies/colonyruntime.js'
 
 let host = "rocinante"
 let port = "50080"
+//let host = "colonies-api.rocksigma.computer"
+//let port = "443"
 
 var runtime = new ColonyRuntime(host, port)
 export let global = {
