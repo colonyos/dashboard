@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react"
-import { ContentHeader } from '@components';
 import ReactFlow, { Controls, Background, MarkerType, updateEdge } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { global } from '../global'
@@ -44,7 +43,7 @@ function updateEdges(edges) {
     }
 }
 
-class Page extends Component {
+class ProcessGraphView extends Component {
     constructor() {
         super();
         this.state = {
@@ -81,23 +80,9 @@ class Page extends Component {
     render() {
         const { nodes, edges } = this.state
         return (
-            <div>
-                <ContentHeader title="Workflow" />
-                <section className="content">
-                    <div className="container-fluid">
-                        <div className="card">
-                            <div className="card-header">
-                                <h3 className="table-header">Process graph</h3>
-                                <div className="card-body">
-                                    <Flow nodes={nodes} edges={edges} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+            <Flow nodes={nodes} edges={edges} />
         );
     }
 }
 
-export default Page;
+export default ProcessGraphView;

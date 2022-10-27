@@ -73,21 +73,4 @@ class WorkersView extends Component {
     }
 }
 
-const Page = () => {
-    return (
-        <div>
-            <ContentHeader title="Registered workers" />
-            <section className="content">
-                <div className="container-fluid">
-                    <div className="card">
-                        <div className="card-body">
-                            <WorkersView />
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    );
-};
-
-export default Page;
+export default WorkersView;

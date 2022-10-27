@@ -28,54 +28,12 @@ export const MENU: IMenuItem[] = [
     {
         name: "Processes",
         icon: "fas fa-cube",
-        children: [
-            {
-                name: "Waiting",
-                icon: "fa-hourglass",
-                path: '/waitingprocesses',
-            },
-            {
-                name: "Running",
-                icon: "fa-cogs",
-                path: '/runningprocesses'
-            },
-            {
-                name: "Successful",
-                icon: "fa-check",
-                path: '/successfulprocesses'
-            },
-            {
-                name: "Failed",
-                icon: "fa-bug",
-                path: '/failedprocesses'
-            }
-        ]
+        path: '/processes'
     },
     {
         name: "Workflows",
         icon: "fas fa-cubes",
-        children: [
-            {
-                name: "Waiting",
-                icon: "fa-hourglass",
-                path: '/waitingworkflows'
-            },
-            {
-                name: "Running",
-                icon: "fa-cogs",
-                path: '/runningworkflows'
-            },
-            {
-                name: "Successful",
-                icon: "fa-check",
-                path: '/successfulworkflows'
-            },
-            {
-                name: "Failed",
-                icon: "fa-bug",
-                path: '/failedworkflows'
-            }
-        ]
+        path: '/workflows'
     },
     {
         name: "Cron",

@@ -1,6 +1,6 @@
 import ColonyRuntime from './colonies/colonyruntime.js'
 
-let host = "rocinante"
+let host = "localhost"
 let port = "50080"
 //let host = "colonies-api.rocksigma.computer"
 //let port = "443"
