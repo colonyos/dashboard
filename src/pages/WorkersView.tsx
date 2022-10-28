@@ -24,8 +24,12 @@ class WorkersView extends Component {
             this.interval = setInterval(() => {
                 rt.getRuntimes(global.colonyId, global.runtimePrvKey).then((runtimes) => {
                     this.setState({ runtimes: runtimes })
+                }).catch((err) => {
+                    console.log(err)
                 })
             }, 1000)
+        }).catch((err) => {
+            console.log(err)
         })
     }
 

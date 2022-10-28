@@ -56,7 +56,7 @@ class WorkersMapView extends Component {
 
             if (runtime.location.long != 0 && runtime.location.lat != 0) {
                 items.push(
-                    <Marker width={50} anchor={[runtime.location.long, runtime.location.lat]} color={"gray"} />
+                    <Marker width={50} anchor={[runtime.location.long, runtime.location.lat]} color={"green"} />
                 )
             }
         }
