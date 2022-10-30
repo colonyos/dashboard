@@ -66,8 +66,6 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
         )
     }
 
-    console.log(process)
-
     let endTime = Date.parse(process.endtime)
     if (endTime > 0 && process.state == 2) {
         items.push(

@@ -17,64 +17,6 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-class WorkersMapViewOld extends Component {
-    constructor() {
-        super();
-        this.state = {
-            runtimes: [],
-        };
-    }
-
-    componentDidMount() {
-        let rt = global.runtime
-        let state = this.props.state
-        rt.load().then(() => {
-            rt.getRuntimes(global.colonyId, global.runtimePrvKey).then((runtimes) => {
-                this.setState({ runtimes: runtimes })
-            })
-            this.interval = setInterval(() => {
-                rt.getRuntimes(global.colonyId, global.runtimePrvKey).then((runtimes) => {
-                    this.setState({ runtimes: runtimes })
-                })
-            }, 1000)
-        })
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval)
-    }
-
-    render() {
-        const { runtimes } = this.state;
-        const items = []
-        if (runtimes == null) {
-            return (<h5>No workers found</h5>)
-        }
-
-        // for (let i = 0; i < runtimes.length; i++) {
-        //     let runtime = runtimes[i]
-
-        //     if (runtime.location.long != 0 && runtime.location.lat != 0) {
-        //         items.push(
-        //             <Marker width={50} anchor={[runtime.location.long, runtime.location.lat]} color={"green"} />
-        //         )
-        //     }
-        // }
-
-        return (
-            <Map
-                initialViewState={{
-                    longitude: -122.4,
-                    latitude: 37.8,
-                    zoom: 14
-                }}
-                style={{ width: 600, height: 400 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-            />
-        );
-    }
-}
-
 class WorkersMapView extends Component {
     constructor() {
         super();
@@ -84,10 +26,6 @@ class WorkersMapView extends Component {
     }
 
     componentDidMount() {
-        this.resizeInterval = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-        }, 100);
-
         let rt = global.runtime
         let state = this.props.state
         rt.load().then(() => {
@@ -103,7 +41,6 @@ class WorkersMapView extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.resizeInterval)
         clearInterval(this.interval)
     }
 
