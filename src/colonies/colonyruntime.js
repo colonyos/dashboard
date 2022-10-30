@@ -106,8 +106,8 @@ class ColonyRuntime {
 
     addRuntime(runtime, prvKey) {
         var msg = {
-            "msgtype": "addruntimemsg",
-            "runtime": runtime
+            "runtime": runtime,
+            "msgtype": "addruntimemsg"
         }
 
         return this.sendRPCMsg(msg, prvKey)
@@ -145,6 +145,8 @@ class ColonyRuntime {
             "msgtype": "submitprocessespecmsg",
             "spec": spec
         }
+
+        console.log(msg)
 
         return this.sendRPCMsg(msg, prvKey)
     }

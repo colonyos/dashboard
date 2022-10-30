@@ -585,7 +585,6 @@ let Crypto = class {
                 r.arrayBuffer().then((buffer) => {
                     console.log(buffer)
                     WebAssembly.instantiate(buffer, go.importObject).then((result) => {
-                        console.log("XXXX")
                         go.run(result.instance);
                         ok()
                     })
