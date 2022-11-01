@@ -12,9 +12,9 @@ Username: admin@colonyos.io\
 Password: admin
 
 # Screenshots
-[Dashboard](docs/images/dashboard1.png)
-[Dashboard](docs/images/dashboard2.png)
-[Dashboard](docs/images/dashboard3.png)
+![Dashboard](docs/images/dashboard1.png)
+![Dashboard](docs/images/dashboard2.png)
+![Dashboard](docs/images/dashboard3.png)
 
 # Links
 - https://github.com/erdkse/adminlte-3-react
