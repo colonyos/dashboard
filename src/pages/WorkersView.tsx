@@ -77,11 +77,11 @@ class WorkersView extends Component {
 
             let approveButton = null
             if (runtime.state == 0) {
-                approveButton = <Button variant="primary" size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
+                approveButton = <Button variant="primary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
             } else if (runtime.state == 1) {
-                approveButton = <Button variant="warning" size="sm" onClick={() => rejectRuntime(runtime.runtimeid)}>Reject</Button>
+                approveButton = <Button variant="warning" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => rejectRuntime(runtime.runtimeid)}>Reject</Button>
             } else if (runtime.state == 2) {
-                approveButton = <Button variant="primary" size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
+                approveButton = <Button variant="primary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
             }
 
             items.push(<tr key={runtime.runtimeid}>
@@ -93,7 +93,7 @@ class WorkersView extends Component {
                 <td> {parseTime(runtime.lastheardfromtime)}</td>
                 <td>
                     {approveButton}{' '}
-                    <Button variant="danger" size="sm" onClick={() => unregisterRuntime(runtime.runtimeid)}>
+                    <Button variant="danger" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterRuntime(runtime.runtimeid)}>
                         Remove
                     </Button>
                 </td>
