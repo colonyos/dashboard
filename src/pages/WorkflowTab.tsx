@@ -9,8 +9,8 @@ const WorkflowTab = () => {
     const navigate = useNavigate();
     return (
         <Tabs defaultActiveKey="waiting-procs" className="mb-3">
-            <Tab eventKey="waiting-procs" title="Process Graph">
-                <ContentHeader title="Process Graph" />
+            <Tab eventKey="waiting-procs" title="Processgraph">
+                <ContentHeader title="Processgraph" />
                 <section className="content">
                     <div className="container-fluid">
                         <div className="card">

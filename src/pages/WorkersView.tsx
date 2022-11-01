@@ -5,6 +5,34 @@ import Table from 'react-bootstrap/Table';
 import { parseTime } from '@app/utils/helpers';
 import { rtstate2str } from '@app/utils/helpers';
 import { ContentHeader } from '@components';
+import Button from 'react-bootstrap/Button';
+
+function approveRuntime(runtimeId) {
+    let rt = global.runtime
+    rt.load().then(() => {
+        rt.approveRuntime(runtimeId, global.colonyPrvKey)
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+function rejectRuntime(runtimeId) {
+    let rt = global.runtime
+    rt.load().then(() => {
+        rt.rejectRuntime(runtimeId, global.colonyPrvKey)
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
+function unregisterRuntime(runtimeId) {
+    let rt = global.runtime
+    rt.load().then(() => {
+        rt.removeRuntime(runtimeId, global.colonyPrvKey)
+    }).catch((err) => {
+        console.log(err)
+    })
+}
 
 class WorkersView extends Component {
     constructor() {
@@ -47,6 +75,15 @@ class WorkersView extends Component {
         for (let i = 0; i < runtimes.length; i++) {
             let runtime = runtimes[i]
 
+            let approveButton = null
+            if (runtime.state == 0) {
+                approveButton = <Button variant="primary" size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
+            } else if (runtime.state == 1) {
+                approveButton = <Button variant="warning" size="sm" onClick={() => rejectRuntime(runtime.runtimeid)}>Reject</Button>
+            } else if (runtime.state == 2) {
+                approveButton = <Button variant="primary" size="sm" onClick={() => approveRuntime(runtime.runtimeid)}>Approve</Button>
+            }
+
             items.push(<tr key={runtime.runtimeid}>
                 <td> {runtime.runtimeid}</td>
                 <td> {runtime.name}</td>
@@ -54,7 +91,13 @@ class WorkersView extends Component {
                 <td> {rtstate2str(runtime.state)}</td>
                 <td> {parseTime(runtime.commissiontime)}</td>
                 <td> {parseTime(runtime.lastheardfromtime)}</td>
-            </tr>)
+                <td>
+                    {approveButton}{' '}
+                    <Button variant="danger" size="sm" onClick={() => unregisterRuntime(runtime.runtimeid)}>
+                        Remove
+                    </Button>
+                </td>
+            </tr >)
         }
 
         return (

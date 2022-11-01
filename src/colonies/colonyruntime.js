@@ -113,6 +113,15 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
+    removeRuntime(runtimeId, prvKey) {
+        var msg = {
+            "runtimeid": runtimeId,
+            "msgtype": "deleteruntimemsg"
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
     getRuntimes(colonyid, prvKey) {
         var msg = {
             "msgtype": "getruntimesmsg",
@@ -128,7 +137,7 @@ class ColonyRuntime {
             "runtimeid": runtimeid
         }
 
-        return this.sendRPMsg(msg, prvKey)
+        return this.sendRPCMsg(msg, prvKey)
     }
 
     approveRuntime(runtimeid, prvKey) {

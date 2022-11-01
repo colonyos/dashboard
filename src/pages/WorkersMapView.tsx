@@ -17,6 +17,12 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
+const ResizeMap = () => {
+    const map = useMap();
+    map._onResize();
+    return null;
+};
+
 class WorkersMapView extends Component {
     constructor() {
         super();
@@ -37,6 +43,7 @@ class WorkersMapView extends Component {
                     this.setState({ runtimes: runtimes })
                 })
             }, 1000)
+
         })
     }
 
@@ -71,6 +78,7 @@ class WorkersMapView extends Component {
                 }}>
                 <MapContainer ref="map" attributionControl={false} id='map-container' center={[54.71866128756121, 19.22332039378996]} zoom={4}
                     zoomControl={false} scrollWheelZoom={true} style={{ height: "800px", width: "100%" }}>
+                    <ResizeMap />
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

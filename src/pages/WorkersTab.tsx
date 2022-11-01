@@ -27,13 +27,6 @@ class WorkersTabs extends React.Component {
 
     handleSelect(key) {
         this.setState({ key });
-        if (key == "map-tab") {
-            interval = setInterval(function() {
-                window.dispatchEvent(new Event('resize'));
-            }, 100);
-        } else {
-            clearInterval(interval)
-        }
     }
 
     render() {
@@ -50,7 +43,7 @@ class WorkersTabs extends React.Component {
             </section>
         </Tab>;
 
-        let tab2 = <Tab eventKey={"map-tab"} title="Maps">
+        let tab2 = <Tab eventKey={"map-tab"} title="Map">
             <WorkersMapView />
         </Tab>;
 

@@ -138,7 +138,7 @@ class WorkersView extends Component {
                                     <div><code>export COLONIES_COLONYID="{global.colonyId}"</code></div>
                                     <div><code>export COLONIES_RUNTIMEID="{runtimeId}"</code></div>
                                     <div><code>export COLONIES_RUNTIMEPRVKEY="{runtimePrvKey}"</code></div>
-                                    <div><code>export COLONIES_RUNTIMETYPE="<span id="env-colonies">"</span></code></div>
+                                    <div><code>export COLONIES_RUNTIMETYPE="<span id="env-colonies"></span>"</code></div>
                                 </div>
                             </div>
                         </div>
