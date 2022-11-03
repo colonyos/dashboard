@@ -59,7 +59,7 @@ const Login = () => {
                 <div className="card-header text-center">
                     <div class="box">
                         <img width="90px" src="/img/logo.png" />
-                        <span id="colonies-login-title">Colonies</span>
+                        <span id="colonies-login-title">BEMIS</span>
                     </div>
                 </div>
                 <div className="card-body">

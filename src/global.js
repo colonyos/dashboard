@@ -1,7 +1,8 @@
 import ColonyRuntime from './colonies/colonyruntime.js'
 
 //let host = "localhost"
-let host = "rocinante"
+//let host = "rocinante"
+let host = "colonyos.io"
 let port = "50080"
 let tls = "false"
 
