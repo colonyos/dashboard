@@ -8,12 +8,14 @@ import { state2str } from '@app/utils/helpers';
 import { attrtype2str } from '@app/utils/helpers';
 import { parseTime } from '@app/utils/helpers';
 import { parseDict } from '@app/utils/helpers';
+import { parseArr } from '@app/utils/helpers';
 import { calcExecTime } from '@app/utils/helpers';
 import { calcWaitTime } from '@app/utils/helpers';
 import { calcRemainingTime } from '@app/utils/helpers';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { PfImage } from '@profabric/react-components';
+import { useNavigate } from "react-router-dom";
 
 const StyledContentImage = styled(PfImage)`
   display: inline-block;
@@ -165,7 +167,7 @@ class ProcessSpecView extends Component {
                     </tr>
                     <tr>
                         <th>Argument</th>
-                        <td>{process.spec.args}</td>
+                        <td>{parseArr(process.spec.args)}</td>
                     </tr>
                     <tr>
                         <th>Max Exec Time</th>
@@ -195,7 +197,15 @@ class ProcessView extends Component {
     }
 
     render() {
+        let props = this.props
+
+        const Trigger = (workflowid) => {
+            console.log("xxxxxxxxxxxxxxxxxx")
+            props.navigate("/workflow?workflowid=" + workflowid)
+        }
+
         let process = this.props.process
+
         return (
             <Table striped bordered hover >
                 <tbody>
@@ -203,7 +213,7 @@ class ProcessView extends Component {
                         <th>Process Id</th>
                         <td>{process.processid}</td>
                     </tr>
-                    <tr>
+                    <tr onClick={() => { Trigger(process.processgraphid) }}>
                         <th>ProcessGraph Id</th>
                         <td>{process.processgraphid}</td>
                     </tr>
@@ -376,6 +386,7 @@ class Page extends Component {
     }
 
     render() {
+        let props = this.props
         const { process } = this.state
         return (
             <div>
@@ -386,7 +397,7 @@ class Page extends Component {
                             <div className="card-header">
                                 <h3 className="table-header">Timeline</h3>
                                 <div className="card-body">
-                                    <TimelineView process={process} />
+                                    <TimelineView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
@@ -394,7 +405,7 @@ class Page extends Component {
                             <div className="card-header">
                                 <h3 className="table-header">Process Specifcation</h3>
                                 <div className="card-body">
-                                    <ProcessSpecView process={process} />
+                                    <ProcessSpecView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
@@ -403,7 +414,7 @@ class Page extends Component {
                             <div className="card-header">
                                 <h3 className="table-header">Process Information</h3>
                                 <div className="card-body">
-                                    <ProcessView process={process} />
+                                    <ProcessView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
@@ -412,7 +423,7 @@ class Page extends Component {
                             <div className="card-header">
                                 <h3 className="table-header">Attributes</h3>
                                 <div className="card-body">
-                                    <AttributeView process={process} />
+                                    <AttributeView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
@@ -423,4 +434,12 @@ class Page extends Component {
     }
 }
 
-export default Page;
+const PageWithNavigate = () => {
+    const navigate = useNavigate();
+    return (
+        <Page navigate={navigate} />
+    )
+}
+
+
+export default PageWithNavigate;

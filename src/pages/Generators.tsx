@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import { parseTime } from '@app/utils/helpers';
 import { bool2str } from '@app/utils/helpers';
 import { ContentHeader } from '@components';
+import JSONPretty from 'react-json-pretty';
 
 class GeneratorsView extends Component {
     constructor() {
@@ -37,7 +38,7 @@ class GeneratorsView extends Component {
                             </tr>
                             <tr>
                                 <th>Workflow Spec</th>
-                                <td>{generator.workflowspec}</td>
+                                <td><JSONPretty data={generator.workflowspec}></JSONPretty></td>
                             </tr>
                             <tr>
                                 <th>Last Run</th>

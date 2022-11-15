@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table';
 import { parseTime } from '@app/utils/helpers';
 import { bool2str } from '@app/utils/helpers';
 import { ContentHeader } from '@components';
+import JSONPretty from 'react-json-pretty';
+import { useNavigate } from "react-router-dom";
 
 class CronsView extends Component {
     constructor() {
@@ -14,6 +16,12 @@ class CronsView extends Component {
     }
 
     render() {
+        let props = this.props
+
+        const Trigger = (workflowid) => {
+            props.navigate("/workflow?workflowid=" + workflowid)
+        }
+
         let crons = this.props.crons
 
         const items = []
@@ -26,6 +34,10 @@ class CronsView extends Component {
                             <tr>
                                 <th>Cron Id</th>
                                 <td>{cron.cronid}</td>
+                            </tr>
+                            <tr onClick={() => { Trigger(cron.prevprocessgraphid) }}>
+                                <th>Processgraph Id</th>
+                                <td>{cron.prevprocessgraphid}</td>
                             </tr>
                             <tr>
                                 <th>Name</th>
@@ -53,18 +65,14 @@ class CronsView extends Component {
                             </tr>
                             <tr>
                                 <th>Workflow Spec</th>
-                                <td>{cron.workflowspec}</td>
-                            </tr>
-                            <tr>
-                                <th>Previous Processgraph id</th>
-                                <td>{cron.prevprocessgraphid}</td>
+                                <td><JSONPretty data={cron.workflowspec}></JSONPretty></td>
                             </tr>
                             <tr>
                                 <th>Wait for Previous Processgraph</th>
                                 <td>{bool2str(cron.waitforprevprocessgraph)}</td>
                             </tr>
                         </tbody >
-                    </Table>
+                    </Table >
                 )
             }
             return (
@@ -109,6 +117,7 @@ class Page extends Component {
     }
 
     render() {
+        let props = this.props
         const { crons } = this.state
         return (
             <div>
@@ -118,7 +127,7 @@ class Page extends Component {
                         <div className="card">
                             <div className="card-header">
                                 <div className="card-body">
-                                    <CronsView crons={crons} />
+                                    <CronsView crons={crons} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
@@ -129,4 +138,11 @@ class Page extends Component {
     }
 }
 
-export default Page;
+const PageWithNavigate = () => {
+    const navigate = useNavigate();
+    return (
+        <Page navigate={navigate} />
+    )
+}
+
+export default PageWithNavigate;
