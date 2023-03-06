@@ -21,9 +21,9 @@ export const MENU: IMenuItem[] = [
         path: '/'
     },
     {
-        name: "Workers",
+        name: "Executors",
         icon: "fas fa-microchip",
-        path: '/workers'
+        path: '/executors'
     },
     {
         name: "Processes",

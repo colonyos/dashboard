@@ -8,7 +8,7 @@ npm start
 ```
 Use the login credential below:
 
-Username: admin@colonyos.io\
+Username: admin@colonyos.io
 Password: admin
 
 # Screenshots

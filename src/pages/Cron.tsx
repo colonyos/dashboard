@@ -95,15 +95,15 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getCrons(global.colonyId, global.runtimePrvKey).then((crons) => {
+        let api = global.colonies
+        api.load().then(() => {
+            api.getCrons(global.colonyId, global.executorPrvKey).then((crons) => {
                 this.setState({ crons: crons })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                rt.getCrons(global.colonyId, global.runtimePrvKey).then((crons) => {
+                api.getCrons(global.colonyId, global.executorPrvKey).then((crons) => {
                     this.setState({ crons: crons })
                 }).catch((err) => {
                     console.log(err)

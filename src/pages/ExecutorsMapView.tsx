@@ -23,24 +23,24 @@ const ResizeMap = () => {
     return null;
 };
 
-class WorkersMapView extends Component {
+class ExecutorsMapView extends Component {
     constructor() {
         super();
         this.state = {
-            runtimes: [],
+            executors: [],
         };
     }
 
     componentDidMount() {
-        let rt = global.runtime
+        let api = global.colonies
         let state = this.props.state
-        rt.load().then(() => {
-            rt.getRuntimes(global.colonyId, global.runtimePrvKey).then((runtimes) => {
-                this.setState({ runtimes: runtimes })
+        api.load().then(() => {
+            api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
+                this.setState({ executors: executors })
             })
             this.interval = setInterval(() => {
-                rt.getRuntimes(global.colonyId, global.runtimePrvKey).then((runtimes) => {
-                    this.setState({ runtimes: runtimes })
+                api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
+                    this.setState({ executors: executors })
                 })
             }, 1000)
 
@@ -52,19 +52,19 @@ class WorkersMapView extends Component {
     }
 
     render() {
-        const { runtimes } = this.state;
+        const { executors } = this.state;
         const items = []
 
         const position = [51.505, -0.09]
 
-        for (let i = 0; i < runtimes.length; i++) {
-            let runtime = runtimes[i]
+        for (let i = 0; i < executors.length; i++) {
+            let executor = executors[i]
 
-            if (runtime.location.long != 0 && runtime.location.lat != 0) {
+            if (executor.location.long != 0 && executor.location.lat != 0) {
                 items.push(
-                    <Marker position={[runtime.location.long, runtime.location.lat]} >
+                    <Marker position={[executor.location.long, executor.location.lat]} >
                         <Popup>
-                            {runtime.name}
+                            {executor.name}
                         </Popup>
                     </ Marker>
                 )
@@ -89,4 +89,4 @@ class WorkersMapView extends Component {
     }
 }
 
-export default WorkersMapView;
+export default ExecutorsMapView;

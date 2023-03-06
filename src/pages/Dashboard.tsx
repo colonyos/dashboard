@@ -111,8 +111,8 @@ const DashboardView = (props) => {
                         <div className="col-lg-3 col-6">
                             <div className="small-box bg-primary">
                                 <div className="inner">
-                                    <h3>{stats.runtimes}</h3>
-                                    <p>Registered Workers</p>
+                                    <h3>{stats.executors}</h3>
+                                    <p>Registered Executors</p>
                                 </div>
                                 <div className="icon">
                                     <i className="ion ion-android-time" />
@@ -139,14 +139,13 @@ class Page extends Component {
         let params = new URLSearchParams(search);
         let processid = params.get('processid');
 
-        let rt = global.runtime
-        rt.load().then(() => {
-            console.log(rt)
-            rt.getColonyStats(global.colonyId, global.runtimePrvKey).then((stats) => {
+        let api = global.colonies
+        api.load().then(() => {
+            api.getColonyStats(global.colonyId, global.executorPrvKey).then((stats) => {
                 this.setState({ stats: stats })
             })
             this.interval = setInterval(() => {
-                rt.getColonyStats(global.colonyId, global.runtimePrvKey).then((stats) => {
+                api.getColonyStats(global.colonyId, global.executorPrvKey).then((stats) => {
                     this.setState({ stats: stats })
                 })
             }, 1000)

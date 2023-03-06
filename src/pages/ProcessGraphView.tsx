@@ -57,15 +57,14 @@ class ProcessGraphView extends Component {
         let params = new URLSearchParams(search)
         let workflowid = params.get('workflowid')
 
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getWorkflow(workflowid, global.runtimePrvKey).then((workflow) => {
-                console.log(workflow)
+        let api = global.colonies
+        api.load().then(() => {
+            api.getWorkflow(workflowid, global.executorPrvKey).then((workflow) => {
                 updateEdges(workflow.edges)
                 this.setState({ nodes: workflow.nodes, edges: workflow.edges })
             })
             this.interval = setInterval(() => {
-                rt.getWorkflow(workflowid, global.runtimePrvKey).then((workflow) => {
+                api.getWorkflow(workflowid, global.executorPrvKey).then((workflow) => {
                     updateEdges(workflow.edges)
                     this.setState({ nodes: workflow.nodes, edges: workflow.edges })
                 })

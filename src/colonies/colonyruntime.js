@@ -104,54 +104,54 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    addRuntime(runtime, prvKey) {
+    addExecutor(executor, prvKey) {
         var msg = {
-            "runtime": runtime,
-            "msgtype": "addruntimemsg"
+            "executor": executor,
+            "msgtype": "addexecutormsg"
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    removeRuntime(runtimeId, prvKey) {
+    removeExecutor(executorId, prvKey) {
         var msg = {
-            "runtimeid": runtimeId,
-            "msgtype": "deleteruntimemsg"
+            "executorid": executorId,
+            "msgtype": "deleteexecutormsg"
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getRuntimes(colonyid, prvKey) {
+    getExecutors(colonyid, prvKey) {
         var msg = {
-            "msgtype": "getruntimesmsg",
+            "msgtype": "getexecutorsmsg",
             "colonyid": colonyid
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    rejectRuntime(runtimeid, prvKey) {
+    rejectExecutor(executorid, prvKey) {
         var msg = {
-            "msgtype": "rejectruntimemsg",
-            "runtimeid": runtimeid
+            "msgtype": "rejectexecutormsg",
+            "executorid": executorid
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    approveRuntime(runtimeid, prvKey) {
+    approveExecutor(executorid, prvKey) {
         var msg = {
-            "msgtype": "approveruntimemsg",
-            "runtimeid": runtimeid
+            "msgtype": "approveexecutormsg",
+            "executorid": executorid
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    submitProcessSpec(spec, prvKey) {
+    submitFunctionSpec(spec, prvKey) {
         var msg = {
-            "msgtype": "submitprocessespecmsg",
+            "msgtype": "submitfuncspecmsg",
             "spec": spec
         }
 

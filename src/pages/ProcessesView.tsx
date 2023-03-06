@@ -14,14 +14,14 @@ class ProcessesView extends Component {
     }
 
     componentDidMount() {
-        let rt = global.runtime
+        let api = global.colonies
         let state = this.props.state
-        rt.load().then(() => {
-            rt.getProcesses(global.colonyId, 100, state, global.runtimePrvKey).then((processes) => {
+        api.load().then(() => {
+            api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
                 this.setState({ processes: processes })
             })
             this.interval = setInterval(() => {
-                rt.getProcesses(global.colonyId, 100, state, global.runtimePrvKey).then((processes) => {
+                api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
                     this.setState({ processes: processes })
                 })
             }, 1000)
@@ -52,7 +52,7 @@ class ProcessesView extends Component {
                 <td> {parseTime(process.submissiontime)}</td>
                 <td> {process.spec.func} </td>
                 <td> {parseArr(process.spec.args)} </td>
-                <td> {process.spec.conditions.runtimetype}</td>
+                <td> {process.spec.conditions.executortype}</td>
             </tr>)
         }
 
@@ -64,7 +64,7 @@ class ProcessesView extends Component {
                         <th>Submission Time</th>
                         <th>Function</th>
                         <th>Args</th>
-                        <th>Target Runtime Type</th>
+                        <th>Target Executor Type</th>
                     </tr>
                 </thead>
                 <tbody>

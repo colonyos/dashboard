@@ -13,14 +13,14 @@ class WorkflowsView extends Component {
     }
 
     componentDidMount() {
-        let rt = global.runtime
+        let api = global.colonies
         let state = this.props.state
-        rt.load().then(() => {
-            rt.getWorkflows(global.colonyId, 100, state, global.runtimePrvKey).then((workflows) => {
+        api.load().then(() => {
+            api.getWorkflows(global.colonyId, 100, state, global.executorPrvKey).then((workflows) => {
                 this.setState({ workflows: workflows })
             })
             this.interval = setInterval(() => {
-                rt.getWorkflows(global.colonyId, 100, state, global.runtimePrvKey).then((workflows) => {
+                api.getWorkflows(global.colonyId, 100, state, global.executorPrvKey).then((workflows) => {
                     this.setState({ workflows: workflows })
                 })
             }, 1000)

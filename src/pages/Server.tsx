@@ -110,23 +110,23 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        let rt = global.runtime
+        let api = global.colonies
         let cluster = {}
-        rt.load().then(() => {
-            rt.getClusterInfo(global.serverPrvKey).then((c) => {
+        api.load().then(() => {
+            api.getClusterInfo(global.serverPrvKey).then((c) => {
                 cluster = c
             }).then(() => {
-                return rt.getServerVersion()
+                return api.getServerVersion()
             }).then((serverInfo) => {
                 this.setState({ serverInfo: serverInfo, cluster: cluster })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                rt.getClusterInfo(global.serverPrvKey).then((c) => {
+                api.getClusterInfo(global.serverPrvKey).then((c) => {
                     cluster = c
                 }).then(() => {
-                    return rt.getServerVersion()
+                    return api.getServerVersion()
                 }).then((serverInfo) => {
                     this.setState({ serverInfo: serverInfo, cluster: cluster })
                 }).catch((err) => {

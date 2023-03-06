@@ -68,15 +68,15 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getGenerators(global.colonyId, global.runtimePrvKey).then((generators) => {
+        let api = global.colonies
+        api.load().then(() => {
+            api.getGenerators(global.colonyId, global.executorPrvKey).then((generators) => {
                 this.setState({ generators: generators })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                rt.getGenerators(global.colonyId, global.runtimePrvKey).then((generators) => {
+                api.getGenerators(global.colonyId, global.executorPrvKey).then((generators) => {
                     this.setState({ generators: generators })
                 }).catch((err) => {
                     console.log(err)

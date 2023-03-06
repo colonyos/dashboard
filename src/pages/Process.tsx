@@ -61,7 +61,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <b>Assigned to worker</b>
                     </h3>
                     <div className="timeline-body">
-                        <b>WorkerId:</b> {process.assignedruntimeid}
+                        <b>ExecutorId:</b> {process.assignedexecutorid}
                     </div>
                 </div>
             </div>
@@ -150,12 +150,12 @@ class ProcessSpecView extends Component {
                         <td>{process.spec.conditions.colonyid}</td>
                     </tr>
                     <tr>
-                        <th>Target Runtime Ids</th>
-                        <td>{process.spec.conditions.runtimeids}</td>
+                        <th>Target Executor Ids</th>
+                        <td>{process.spec.conditions.executorids}</td>
                     </tr>
                     <tr>
-                        <th>Target Runtime Type</th>
-                        <td>{process.spec.conditions.runtimetype}</td>
+                        <th>Target Executor Type</th>
+                        <td>{process.spec.conditions.executortype}</td>
                     </tr>
                     <tr>
                         <th>Dependencies</th>
@@ -238,8 +238,8 @@ class ProcessView extends Component {
                         <td>{bool2str(process.isassigned)}</td>
                     </tr>
                     <tr>
-                        <th>Assigned Runtime Id</th>
-                        <td>{process.assignedruntimeid}</td>
+                        <th>Assigned Executor Id</th>
+                        <td>{process.assignedexecutorid}</td>
                     </tr>
                     <tr>
                         <th>State</th>
@@ -368,13 +368,13 @@ class Page extends Component {
         let params = new URLSearchParams(search);
         let processid = params.get('processid');
 
-        let rt = global.runtime
-        rt.load().then(() => {
-            rt.getProcess(processid, global.runtimePrvKey).then((process) => {
+        let api = global.colonies
+        api.load().then(() => {
+            api.getProcess(processid, global.executorPrvKey).then((process) => {
                 this.setState({ process: process })
             })
             this.interval = setInterval(() => {
-                rt.getProcess(processid, global.runtimePrvKey).then((process) => {
+                api.getProcess(processid, global.executorPrvKey).then((process) => {
                     this.setState({ process: process })
                 })
             }, 1000)

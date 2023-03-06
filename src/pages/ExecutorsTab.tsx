@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { ContentHeader } from '@components';
-import WorkersView from './WorkersView';
-import WorkersMapView from './WorkersMapView';
-import RegisterWorkerView from './RegisterWorkerView';
+import ExecutorsView from './ExecutorsView';
+import ExecutorsMapView from './ExecutorsMapView';
+import RegisterExecutorView from './RegisterExecutorView';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import React, { Component } from "react";
 
 let interval = null
 
-class WorkersTabs extends React.Component {
+class ExecutorsTabs extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -17,7 +17,7 @@ class WorkersTabs extends React.Component {
         this.nextTab = this.nextTab.bind(this);
 
         this.state = {
-            key: "workers-tab"
+            key: "executors-tab"
         };
     }
 
@@ -30,13 +30,13 @@ class WorkersTabs extends React.Component {
     }
 
     render() {
-        let tab1 = <Tab eventKey={"workers-tab"} title="Workers">
-            <ContentHeader title="Workers" />
+        let tab1 = <Tab eventKey={"executors-tab"} title="Executors">
+            <ContentHeader title="Executors" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-body">
-                            <WorkersView />
+                            <ExecutorsView />
                         </div>
                     </div>
                 </div>
@@ -44,16 +44,16 @@ class WorkersTabs extends React.Component {
         </Tab>;
 
         let tab2 = <Tab eventKey={"map-tab"} title="Map">
-            <WorkersMapView />
+            <ExecutorsMapView />
         </Tab>;
 
-        let tab3 = <Tab eventKey={"register-worker-tab"} title="Register Worker">
-            <ContentHeader title="Register Worker" />
+        let tab3 = <Tab eventKey={"register-worker-tab"} title="Register Executor">
+            <ContentHeader title="Register Executor" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-body">
-                            <RegisterWorkerView tabs={this} />
+                            <RegisterExecutorView tabs={this} />
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ class WorkersTabs extends React.Component {
 
         return (
             <Tabs
-                defaultActiveKey="workers"
+                defaultActiveKey="executors"
                 activeKey={this.state.key}
                 onSelect={this.handleSelect}>
                 {tab1}
@@ -73,4 +73,4 @@ class WorkersTabs extends React.Component {
     }
 }
 
-export default WorkersTabs;
+export default ExecutorsTabs;

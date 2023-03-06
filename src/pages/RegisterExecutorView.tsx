@@ -11,25 +11,20 @@ import Crypto from '../colonies/crypto/crypto.js';
 
 const handleRegister = (e, tabs) => {
     e.preventDefault();
-    tabs.nextTab("workers-tab")
-    let runtimeName = e.target.form.runtimename.value
-    let runtimeType = e.target.form.runtimetype.value
+    tabs.nextTab("executors-tab")
+    let executorName = e.target.form.executorname.value
+    let executorType = e.target.form.executortype.value
     let long = e.target.form.long.value
     let lat = e.target.form.lat.value
     let colonyId = e.target.form.colonyid.value
-    let runtimeId = e.target.form.runtimeid.value
-    let runtimePrvKey = e.target.form.runtimeprvkey.value
+    let executorId = e.target.form.executorid.value
+    let executorPrvKey = e.target.form.executorprvkey.value
 
-    let runtime = {
-        runtimeid: runtimeId,
-        runtimetype: runtimeType,
-        name: runtimeName,
+    let executor = {
+        executorid: executorId,
+        executortype: executorType,
+        executorname: executorName,
         colonyid: colonyId,
-        cpu: "",
-        cores: 0,
-        mem: 0,
-        gpu: "",
-        gpus: 0,
         state: 0,
         commissiontime: "0001-01-01T00:00:00Z",
         lastheardfromtime: "0001-01-01T00:00:00Z",
@@ -39,13 +34,13 @@ const handleRegister = (e, tabs) => {
         }
     }
 
-    let rt = global.runtime
-    rt.load().then(() => {
-        rt.addRuntime(runtime, global.colonyPrvKey)
+    let api = global.colonies
+    api.load().then(() => {
+        api.addExecutor(executor, global.colonyPrvKey)
     })
 }
 
-class WorkersView extends Component {
+class ExecutorsView extends Component {
     constructor() {
         super();
         this.state = {
@@ -66,27 +61,27 @@ class WorkersView extends Component {
     }
 
     render() {
-        let runtimeId = ""
-        let runtimePrvKey = ""
+        let executorId = ""
+        let executorPrvKey = ""
 
         let props = this.props
         let tabs = props.tabs
 
         const { crypto } = this.state
         if (crypto != null) {
-            runtimePrvKey = crypto.prvkey()
-            runtimeId = crypto.id(runtimePrvKey)
+            executorPrvKey = crypto.prvkey()
+            executorId = crypto.id(executorPrvKey)
         }
         return (
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Runtime Name</Form.Label>
-                    <Form.Control name="runtimename" type="text" placeholder="Runtime Name" />
+                    <Form.Label>Executor Name</Form.Label>
+                    <Form.Control name="executorname" type="text" placeholder="Executor Name" />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="Runtime Type">
-                    <Form.Label>Runtime Type</Form.Label>
-                    <Form.Control name="runtimetype" type="text" placeholder="Runtime Type" onChange={event => {
+                <Form.Group className="mb-3" controlId="Executor Type">
+                    <Form.Label>Executor Type</Form.Label>
+                    <Form.Control name="executortype" type="text" placeholder="Executor Type" onChange={event => {
                         var span = document.getElementById("env-colonies")
                         span.textContent = event.target.value
                     }} />
@@ -107,17 +102,17 @@ class WorkersView extends Component {
                     <Form.Control name="colonyid" plaintext readOnly defaultValue={global.colonyId} />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="Runtime Id">
-                    <Form.Label>Runtime Id</Form.Label>
-                    <Form.Control name="runtimeid" plaintext readOnly defaultValue={runtimeId} />
+                <Form.Group className="mb-3" controlId="Executor Id">
+                    <Form.Label>Executor Id</Form.Label>
+                    <Form.Control name="executorid" plaintext readOnly defaultValue={executorId} />
                     <Form.Text className="text-muted">
-                        The Runtime Id is derived from the Private Key.
+                        The Executor Id is derived from the Private Key.
                     </Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="Runtime Private Key">
-                    <Form.Label>Runtime Private Key</Form.Label>
-                    <Form.Control name="runtimeprvkey" plaintext readOnly defaultValue={runtimePrvKey} />
+                <Form.Group className="mb-3" controlId="Executor Private Key">
+                    <Form.Label>Executor Private Key</Form.Label>
+                    <Form.Control name="executorprvkey" plaintext readOnly defaultValue={executorPrvKey} />
                     <Form.Text className="text-muted">
                         Generated ECDSA key. The private key is generated in thew browser and not stored or transmitted over Internet. You have to manually provider the worker with the this private key. The worker needs to sign all messages using the private key to prove its Colony membership.
                     </Form.Text>
@@ -133,12 +128,12 @@ class WorkersView extends Component {
                             <div className="card">
                                 <div className="card-body">
                                     <div><code>export COLONIES_TLS="{global.tls}"</code></div>
-                                    <div><code>export COLONIES_SERVERHOST="{global.host}"</code></div>
-                                    <div><code>export COLONIES_SERVERPORT="{global.port}"</code></div>
-                                    <div><code>export COLONIES_COLONYID="{global.colonyId}"</code></div>
-                                    <div><code>export COLONIES_RUNTIMEID="{runtimeId}"</code></div>
-                                    <div><code>export COLONIES_RUNTIMEPRVKEY="{runtimePrvKey}"</code></div>
-                                    <div><code>export COLONIES_RUNTIMETYPE="<span id="env-colonies"></span>"</code></div>
+                                    <div><code>export COLONIES_SERVER_HOST="{global.host}"</code></div>
+                                    <div><code>export COLONIES_SERVER_PORT="{global.port}"</code></div>
+                                    <div><code>export COLONIES_COLONY_ID="{global.colonyId}"</code></div>
+                                    <div><code>export COLONIES_EXECUTOR_ID="{executorId}"</code></div>
+                                    <div><code>export COLONIES_EXECUTOR_PRVKEY="{executorPrvKey}"</code></div>
+                                    <div><code>export COLONIES_EXECUTOR_TYPE="<span id="env-colonies"></span>"</code></div>
                                 </div>
                             </div>
                         </div>
@@ -149,4 +144,4 @@ class WorkersView extends Component {
     }
 }
 
-export default WorkersView;
+export default ExecutorsView;

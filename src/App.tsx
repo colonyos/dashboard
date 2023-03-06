@@ -8,7 +8,7 @@ import { calculateWindowSize } from '@app/utils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWindowSize } from '@app/store/reducers/ui';
 import Dashboard from '@pages/Dashboard';
-import WorkersTab from '@pages/WorkersTab';
+import ExecutorsTab from '@pages/ExecutorsTab';
 import Process from '@pages/Process';
 import ProcessesTab from '@pages/ProcessesTab';
 import WorkflowsTab from '@pages/WorkflowsTab';
@@ -40,7 +40,7 @@ const App = () => {
                 </Route>
                 <Route path="/" element={<PrivateRoute />}>
                     <Route path="/" element={<Main />}>
-                        <Route path="/workers" element={<WorkersTab />} />
+                        <Route path="/executors" element={<ExecutorsTab />} />
                         <Route path="/process" element={<Process />} />
                         <Route path="/workflow" element={<WorkflowTab />} />
                         <Route path="/processes" element={<ProcessesTab />} />
