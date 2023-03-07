@@ -181,6 +181,15 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
+    getFunctions(colonyId, prvKey) {
+        var msg = {
+            "msgtype": "getfunctionsmsg",
+            "colonyid": colonyId
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
     assign(colonyid, timeout, prvKey) {
         var msg = {
             "msgtype": "assignprocessmsg",

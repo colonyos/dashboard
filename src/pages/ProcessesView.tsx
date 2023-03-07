@@ -50,7 +50,7 @@ class ProcessesView extends Component {
             items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
                 <td> {process.processid}</td>
                 <td> {parseTime(process.submissiontime)}</td>
-                <td> {process.spec.func} </td>
+                <td> {process.spec.funcname} </td>
                 <td> {parseArr(process.spec.args)} </td>
                 <td> {process.spec.conditions.executortype}</td>
             </tr>)

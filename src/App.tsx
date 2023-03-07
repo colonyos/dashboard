@@ -13,7 +13,8 @@ import Process from '@pages/Process';
 import ProcessesTab from '@pages/ProcessesTab';
 import WorkflowsTab from '@pages/WorkflowsTab';
 import WorkflowTab from '@pages/WorkflowTab';
-import Cron from '@pages/Cron';
+import Crons from '@pages/Crons';
+import Functions from '@pages/Functions';
 import Generators from '@pages/Generators';
 import Server from '@pages/Server';
 import Profile from '@pages/Profile';
@@ -41,11 +42,12 @@ const App = () => {
                 <Route path="/" element={<PrivateRoute />}>
                     <Route path="/" element={<Main />}>
                         <Route path="/executors" element={<ExecutorsTab />} />
+                        <Route path="/functions" element={<Functions />} />
                         <Route path="/process" element={<Process />} />
                         <Route path="/workflow" element={<WorkflowTab />} />
                         <Route path="/processes" element={<ProcessesTab />} />
                         <Route path="/workflows" element={<WorkflowsTab />} />
-                        <Route path="/cron" element={<Cron />} />
+                        <Route path="/crons" element={<Crons />} />
                         <Route path="/generators" element={<Generators />} />
                         <Route path="/server" element={<Server />} />
                         <Route path="/profile" element={<Profile />} />

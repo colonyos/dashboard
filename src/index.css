@@ -17,6 +17,17 @@ body {
   background: white;
 }
 
+th {
+    font-size: 17px;
+}
+
+td {
+    font-size: 17px;
+}
+
+tr:nth-child(even) {
+}
+
 .main-header .navbar-nav .nav-item .nav-link {
   background: transparent;
   border: none;
@@ -26,6 +37,11 @@ body {
 
 .card-header {
     border: 0px;
+}
+
+.table {
+    padding-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .card-primary.card-outline {

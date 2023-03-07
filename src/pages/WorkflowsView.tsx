@@ -9,6 +9,7 @@ class WorkflowsView extends Component {
         super();
         this.state = {
             workflows: [],
+            fnDict: {}
         };
     }
 
@@ -17,6 +18,10 @@ class WorkflowsView extends Component {
         let state = this.props.state
         api.load().then(() => {
             api.getWorkflows(global.colonyId, 100, state, global.executorPrvKey).then((workflows) => {
+                for (let i in workflows) {
+                    let workflow = workflows[i]
+                }
+
                 this.setState({ workflows: workflows })
             })
             this.interval = setInterval(() => {

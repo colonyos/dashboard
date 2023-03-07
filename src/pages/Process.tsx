@@ -129,7 +129,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
     );
 };
 
-class ProcessSpecView extends Component {
+class FunctionSpecView extends Component {
     constructor() {
         super();
         this.state = {
@@ -142,8 +142,20 @@ class ProcessSpecView extends Component {
             <Table striped bordered hover >
                 <tbody>
                     <tr>
-                        <th>Name</th>
-                        <td>{process.spec.name}</td>
+                        <th>Function Name</th>
+                        <td>{process.spec.funcname}</td>
+                    </tr>
+                    <tr>
+                        <th>Argument</th>
+                        <td>{parseArr(process.spec.args)}</td>
+                    </tr>
+                    <tr>
+                        <th>Node Name</th>
+                        <td>{process.spec.nodename}</td>
+                    </tr>
+                    <tr>
+                        <th>Dependencies</th>
+                        <td>{process.spec.conditions.dependencies}</td>
                     </tr>
                     <tr>
                         <th>Target Colony Id</th>
@@ -158,16 +170,8 @@ class ProcessSpecView extends Component {
                         <td>{process.spec.conditions.executortype}</td>
                     </tr>
                     <tr>
-                        <th>Dependencies</th>
-                        <td>{process.spec.conditions.dependencies}</td>
-                    </tr>
-                    <tr>
                         <th>Function</th>
                         <td>{process.spec.func}</td>
-                    </tr>
-                    <tr>
-                        <th>Argument</th>
-                        <td>{parseArr(process.spec.args)}</td>
                     </tr>
                     <tr>
                         <th>Max Exec Time</th>
@@ -403,9 +407,9 @@ class Page extends Component {
                         </div>
                         <div className="card">
                             <div className="card-header">
-                                <h3 className="table-header">Process Specifcation</h3>
+                                <h3 className="table-header">Function Specifcation</h3>
                                 <div className="card-body">
-                                    <ProcessSpecView process={process} navigate={props.navigate} />
+                                    <FunctionSpecView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>
