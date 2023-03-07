@@ -57,7 +57,7 @@ class FunctionsView extends Component {
         }
 
         const items = []
-        if (funcs.length > 0) {
+        if (funcs != null && funcs.length > 0) {
             for (let i in dict) {
                 let func = dict[i]
                 items.push(

@@ -41,7 +41,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.submissiontime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Process specification submitted</b>
+                        <b>Function specification submitted</b>
                     </h3>
                 </div>
             </div>
