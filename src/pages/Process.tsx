@@ -186,6 +186,10 @@ class FunctionSpecView extends Component {
                         <td>{process.spec.maxretries}</td>
                     </tr>
                     <tr>
+                        <th>Priority</th>
+                        <td>{process.spec.priority}</td>
+                    </tr>
+                    <tr>
                         <th>Environment</th>
                         <td>{parseDict(process.spec.env)}</td>
                     </tr>
@@ -204,7 +208,6 @@ class ProcessView extends Component {
         let props = this.props
 
         const Trigger = (workflowid) => {
-            console.log("xxxxxxxxxxxxxxxxxx")
             props.navigate("/workflow?workflowid=" + workflowid)
         }
 
