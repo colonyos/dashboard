@@ -55,7 +55,7 @@ class ColonyRuntime {
         let promise = new Promise(function(resolve, reject) {
             try {
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://" + host + ":" + port + "/api")
+                xhr.open("POST", "https://" + host + ":" + port + "/api")
                 xhr.send(JSON.stringify(rpcMsg))
 
                 xhr.onload = function() {
@@ -69,7 +69,7 @@ class ColonyRuntime {
                 };
 
                 xhr.onerror = function() {
-                    reject("Failed to connect to http://" + host + ":" + port)
+                    reject("Failed to connect to https://" + host + ":" + port)
                 };
             } catch (e) {
                 reject(e)
