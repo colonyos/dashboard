@@ -12,6 +12,10 @@
   height: 100vh;
 }
 
+.align-right {
+  text-align: right;
+}
+
 body {
   font-family: 'Titillium Web' !important;
   background: white;

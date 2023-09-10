@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setWindowSize } from '@app/store/reducers/ui';
 import Dashboard from '@pages/Dashboard';
 import ExecutorsTab from '@pages/ExecutorsTab';
+import Executor from '@pages/Executor';
 import Process from '@pages/Process';
+import Log from '@pages/Log';
 import ProcessesTab from '@pages/ProcessesTab';
 import WorkflowsTab from '@pages/WorkflowsTab';
 import WorkflowTab from '@pages/WorkflowTab';
@@ -42,8 +44,10 @@ const App = () => {
                 <Route path="/" element={<PrivateRoute />}>
                     <Route path="/" element={<Main />}>
                         <Route path="/executors" element={<ExecutorsTab />} />
+                        <Route path="/executor" element={<Executor />} />
                         <Route path="/functions" element={<Functions />} />
                         <Route path="/process" element={<Process />} />
+                        <Route path="/log" element={<Log />} />
                         <Route path="/workflow" element={<WorkflowTab />} />
                         <Route path="/processes" element={<ProcessesTab />} />
                         <Route path="/workflows" element={<WorkflowsTab />} />

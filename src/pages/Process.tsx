@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { PfImage } from '@profabric/react-components';
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 const StyledContentImage = styled(PfImage)`
   display: inline-block;
@@ -58,7 +59,7 @@ const TimelineView = (props, { isActive }: { isActive: boolean }) => {
                         <span> {parseTime(process.starttime)}</span>
                     </span>
                     <h3 className="timeline-header">
-                        <b>Assigned to worker</b>
+                        <b>Assigned to executor</b>
                     </h3>
                     <div className="timeline-body">
                         <b>ExecutorId:</b> {process.assignedexecutorid}
@@ -146,39 +147,27 @@ class FunctionSpecView extends Component {
                         <td>{process.spec.funcname}</td>
                     </tr>
                     <tr>
-                        <th>Argument</th>
+                        <th>Arguments</th>
                         <td>{parseArr(process.spec.args)}</td>
+                    </tr>
+                    <tr>
+                        <th>Keyword Arguments</th>
+                        <td>{parseDict(process.spec.kwargs)}</td>
                     </tr>
                     <tr>
                         <th>Node Name</th>
                         <td>{process.spec.nodename}</td>
                     </tr>
                     <tr>
-                        <th>Dependencies</th>
-                        <td>{process.spec.conditions.dependencies}</td>
+                        <th>Priority</th>
+                        <td>{process.spec.priority}</td>
                     </tr>
                     <tr>
-                        <th>Target Colony Id</th>
-                        <td>{process.spec.conditions.colonyid}</td>
-                    </tr>
-                    <tr>
-                        <th>Target Executor Ids</th>
-                        <td>{process.spec.conditions.executorids}</td>
-                    </tr>
-                    <tr>
-                        <th>Target Executor Type</th>
-                        <td>{process.spec.conditions.executortype}</td>
-                    </tr>
-                    <tr>
-                        <th>Function</th>
-                        <td>{process.spec.func}</td>
-                    </tr>
-                    <tr>
-                        <th>Max Exec Time</th>
+                        <th>MaxExecTime</th>
                         <td>{process.spec.maxexectime} seconds</td>
                     </tr>
                     <tr>
-                        <th>Max Wait Time</th>
+                        <th>MaxWaitTime</th>
                         <td>{process.spec.maxwaittime} seconds</td>
                     </tr>
                     <tr>
@@ -190,8 +179,87 @@ class FunctionSpecView extends Component {
                         <td>{process.spec.priority}</td>
                     </tr>
                     <tr>
+                        <th>Label</th>
+                        <td>{process.spec.label}</td>
+                    </tr>
+                    <tr>
                         <th>Environment</th>
                         <td>{parseDict(process.spec.env)}</td>
+                    </tr>
+                </tbody>
+            </Table >
+        );
+    }
+}
+
+class ConditionsView extends Component {
+    constructor() {
+        super();
+        this.state = {
+        };
+    }
+
+    render() {
+        let process = this.props.process
+        let gpu = { count: 0, mem: 0 }
+        if (Object.keys(process).length > 2 && process.constructor === Object) {
+            gpu = process.spec.conditions
+        }
+
+        return (
+            <Table striped bordered hover >
+                <tbody>
+                    <tr>
+                        <th>Colony Id</th>
+                        <td>{process.spec.conditions.colonyid}</td>
+                    </tr>
+                    <tr>
+                        <th>Executor Type</th>
+                        <td>{process.spec.conditions.executortype}</td>
+                    </tr>
+                    <tr>
+                        <th>Executor Ids</th>
+                        <td>{process.spec.conditions.executorids}</td>
+                    </tr>
+                    <tr>
+                        <th>Dependencies</th>
+                        <td>{process.spec.conditions.dependencies}</td>
+                    </tr>
+                    <tr>
+                        <th>Walltime</th>
+                        <td>{gpu.walltime} seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Nodes</th>
+                        <td>{process.spec.conditions.nodes}</td>
+                    </tr>
+                    <tr>
+                        <th>CPU</th>
+                        <td>{process.spec.conditions.cpu}</td>
+                    </tr>
+                    <tr>
+                        <th>Processes</th>
+                        <td>{process.spec.conditions.processes}</td>
+                    </tr>
+                    <tr>
+                        <th>Process/Node</th>
+                        <td>{process.spec.conditions.processes_per_node}</td>
+                    </tr>
+                    <tr>
+                        <th>Memory</th>
+                        <td>{process.spec.conditions.memory}</td>
+                    </tr>
+                    <tr>
+                        <th>Storage</th>
+                        <td>{process.spec.conditions.storage}</td>
+                    </tr>
+                    <tr>
+                        <th>GPUs</th>
+                        <td>{gpu.count}</td>
+                    </tr>
+                    <tr>
+                        <th>GPU Memory</th>
+                        <td>{gpu.mem}</td>
                     </tr>
                 </tbody>
             </Table >
@@ -395,13 +463,22 @@ class Page extends Component {
     render() {
         let props = this.props
         const { process } = this.state
+        const TriggerLog = (processid) => {
+            props.navigate("/log?processid=" + processid)
+        }
         return (
             <div>
                 <ContentHeader title="Process" />
                 <section className="content">
                     <div className="container-fluid">
+
                         <div className="card">
                             <div className="card-header">
+                                <div style={{ textAlign: 'right' }}>
+                                    <Button variant="secondary" onClick={(e) => TriggerLog(process.processid)}>
+                                        Logs
+                                    </Button>
+                                </div>
                                 <h3 className="table-header">Timeline</h3>
                                 <div className="card-body">
                                     <TimelineView process={process} navigate={props.navigate} />
@@ -413,6 +490,15 @@ class Page extends Component {
                                 <h3 className="table-header">Function Specifcation</h3>
                                 <div className="card-body">
                                     <FunctionSpecView process={process} navigate={props.navigate} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="table-header">Conditions</h3>
+                                <div className="card-body">
+                                    <ConditionsView process={process} navigate={props.navigate} />
                                 </div>
                             </div>
                         </div>

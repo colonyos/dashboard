@@ -131,6 +131,33 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
+    getExecutor(executorid, prvKey) {
+        var msg = {
+            "msgtype": "getexecutormsg",
+            "executorid": executorid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    getLog(processid, since, prvKey) {
+        var msg = {
+            "msgtype": "getlogsmsg",
+            "processid": processid,
+            "executorid": "",
+            "count": 100,
+            "since": since
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    // ExecutorID string `json:"executorid"`
+    // Count      int    `json:"count"`
+    // Since      int64  `json:"since"`
+    // MsgType    string `json:"msgtype"`
+
+
     rejectExecutor(executorid, prvKey) {
         var msg = {
             "msgtype": "rejectexecutormsg",

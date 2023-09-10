@@ -118,7 +118,7 @@ class ExecutorsView extends Component {
                     </Form.Text>
                 </Form.Group>
 
-                <Button variant="primary" onClick={(e) => handleRegister(e, tabs)}>
+                <Button variant="secondary" onClick={(e) => handleRegister(e, tabs)}>
                     Register
                 </Button>
 

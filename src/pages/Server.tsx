@@ -132,7 +132,7 @@ class Page extends Component {
                 }).catch((err) => {
                     console.log(err)
                 })
-            }, 1000)
+            }, 60000)
         })
     }
 

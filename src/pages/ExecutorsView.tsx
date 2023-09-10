@@ -6,6 +6,7 @@ import { parseTime } from '@app/utils/helpers';
 import { rtstate2str } from '@app/utils/helpers';
 import { ContentHeader } from '@components';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 function approveExecutor(executorId) {
     let api = global.colonies
@@ -68,8 +69,12 @@ class ExecutorsView extends Component {
     render() {
         const { executors } = this.state;
         const items = []
+        let props = this.props
         if (executors == null) {
             return (<h5>No workers found</h5>)
+        }
+        const Trigger = (executorid) => {
+            props.navigate("/executor?executorid=" + executorid)
         }
 
         for (let i = 0; i < executors.length; i++) {
@@ -77,15 +82,14 @@ class ExecutorsView extends Component {
 
             let approveButton = null
             if (executor.state == 0) {
-                approveButton = <Button variant="primary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
             } else if (executor.state == 1) {
-                approveButton = <Button variant="warning" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => rejectExecutor(executor.executorid)}>Reject</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => rejectExecutor(executor.executorid)}>Reject</Button>
             } else if (executor.state == 2) {
-                approveButton = <Button variant="primary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
             }
 
-            items.push(<tr key={executor.executorid}>
-                <td> {executor.executorid}</td>
+            items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
                 <td> {executor.executorname}</td>
                 <td> {executor.executortype}</td>
                 <td> {rtstate2str(executor.state)}</td>
@@ -93,7 +97,7 @@ class ExecutorsView extends Component {
                 <td> {parseTime(executor.lastheardfromtime)}</td>
                 <td>
                     {approveButton}{' '}
-                    <Button variant="danger" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorid)}>
+                    <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorid)}>
                         Remove
                     </Button>
                 </td>
@@ -104,7 +108,6 @@ class ExecutorsView extends Component {
             <Table striped bordered hover >
                 <thead>
                     <tr>
-                        <th>Executor Id</th>
                         <th>Name</th>
                         <th>Type</th>
                         <th>State</th>
@@ -120,4 +123,13 @@ class ExecutorsView extends Component {
     }
 }
 
-export default ExecutorsView;
+const PageWithNavigate = () => {
+    const navigate = useNavigate();
+    return (
+        <ExecutorsView navigate={navigate} />
+    )
+}
+
+
+export default PageWithNavigate;
+
