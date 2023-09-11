@@ -3,6 +3,7 @@ import { ContentHeader } from '@components';
 import React, { Component } from "react"
 import { global } from '../global'
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class Page extends Component {
     constructor() {
@@ -54,6 +55,10 @@ class Page extends Component {
 
     render() {
         let props = this.props
+        const Trigger = (workflowid) => {
+            props.navigate("/process?processid=" + workflowid)
+        }
+
         const { logs, processid } = this.state
         return (
             <div>
@@ -62,6 +67,11 @@ class Page extends Component {
                     <div className="container-fluid">
                         <div className="card">
                             <div className="card-header">
+                                <div style={{ textAlign: 'right' }}>
+                                    <Button variant="secondary" onClick={(e) => Trigger(processid)}>
+                                        Back
+                                    </Button>
+                                </div>
                                 <div className="card-body">
                                     <h3 className="table-header">Process Id - {processid}</h3>
                                     <pre>

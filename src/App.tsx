@@ -19,6 +19,10 @@ import Crons from '@pages/Crons';
 import Functions from '@pages/Functions';
 import Generators from '@pages/Generators';
 import Server from '@pages/Server';
+import FilesystemTab from '@pages/FilesystemTab';
+import FilesTab from '@pages/FilesTab';
+import FileTab from '@pages/FileTab';
+import SnapshotTab from '@pages/SnapshotTab';
 import Profile from '@pages/Profile';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
@@ -54,6 +58,10 @@ const App = () => {
                         <Route path="/crons" element={<Crons />} />
                         <Route path="/generators" element={<Generators />} />
                         <Route path="/server" element={<Server />} />
+                        <Route path="/filesystem" element={<FilesystemTab />} />
+                        <Route path="/files" element={<FilesTab />} />
+                        <Route path="/file" element={<FileTab />} />
+                        <Route path="/snapshot" element={<SnapshotTab />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/" element={<Dashboard />} />
                     </Route>

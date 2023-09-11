@@ -106,6 +106,10 @@ class HardwareView extends Component {
                         <td>{hardware.cpu}</td>
                     </tr>
                     <tr>
+                        <th>Memory</th>
+                        <td>{hardware.mem}</td>
+                    </tr>
+                    <tr>
                         <th>Storage</th>
                         <td>{hardware.storage}</td>
                     </tr>

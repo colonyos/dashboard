@@ -152,11 +152,56 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    // ExecutorID string `json:"executorid"`
-    // Count      int    `json:"count"`
-    // Since      int64  `json:"since"`
-    // MsgType    string `json:"msgtype"`
+    getFileLabels(colonyid, prvKey) {
+        var msg = {
+            "msgtype": "getfilelabelsmsg",
+            "colonyid": colonyid
+        }
 
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    getFiles(colonyid, label, prvKey) {
+        var msg = {
+            "msgtype": "getfilesmsg",
+            "label": label,
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    getFile(colonyid, label, name, prvKey) {
+        var msg = {
+            "msgtype": "getfilemsg",
+            "label": label,
+            "name": name,
+            "latest": false,
+            "fileid": "",
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    getSnapshots(colonyid, prvKey) {
+        var msg = {
+            "msgtype": "getsnapshotsmsg",
+            "colonyid": colonyid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
+    getSnapshot(colonyid, snapshotid, prvKey) {
+        var msg = {
+            "msgtype": "getsnapshotmsg",
+            "colonyid": colonyid,
+            "snapshotid": snapshotid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
 
     rejectExecutor(executorid, prvKey) {
         var msg = {

@@ -16,6 +16,10 @@
   text-align: right;
 }
 
+.bold-text {
+  font-weight: bold;
+}
+
 body {
   font-family: 'Titillium Web' !important;
   background: white;

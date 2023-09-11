@@ -42,7 +42,7 @@ class ExecutorsMapView extends Component {
                 api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
                     this.setState({ executors: executors })
                 })
-            }, 1000)
+            }, 10000)
 
         })
     }
@@ -55,8 +55,6 @@ class ExecutorsMapView extends Component {
         const { executors } = this.state;
         const items = []
 
-        const position = [51.505, -0.09]
-
         for (let i = 0; i < executors.length; i++) {
             let executor = executors[i]
 
@@ -64,7 +62,7 @@ class ExecutorsMapView extends Component {
                 items.push(
                     <Marker position={[executor.location.long, executor.location.lat]} >
                         <Popup>
-                            {executor.name}
+                            {executor.executortype}
                         </Popup>
                     </ Marker>
                 )

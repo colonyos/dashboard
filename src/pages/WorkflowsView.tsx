@@ -51,7 +51,7 @@ class WorkflowsView extends Component {
         for (let i = 0; i < workflows.length; i++) {
             let workflow = workflows[i]
             items.push(<tr key={workflow.processgraphid} onClick={() => { Trigger(workflow.processgraphid) }}>
-                <td> {workflow.processgraphid}</td>
+                <td> <i class="fas fa-cubes"></i> &nbsp; {workflow.processgraphid}</td>
                 <td> {parseTime(workflow.submissiontime)}</td>
             </tr>)
         }

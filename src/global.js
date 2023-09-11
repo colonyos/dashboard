@@ -13,12 +13,12 @@ let tls = "true"
 var colonies = new ColonyRuntime(host, port)
 export let global = {
     colonies: colonies,
-    colonyId: "4787a5071856a4acf702b2ffcea422e3237a679c681314113d86139461290cf4",
-    colonyPrvKey: "ba949fa134981372d6da62b6a56f336ab4d843b22c02a4257dcf7d0d73097514",
-    executorId: "3fc05cf3df4b494e95d6a3d297a34f19938f7daa7422ab0d4f794454133341ac",
-    executorPrvKey: "ddf7f7791208083b6a9ed975a72684f6406a269cfa36f1b1c32045c0a71fff05",
-    serverId: "039231c7644e04b6895471dd5335cf332681c54e27f81fac54f9067b3f2c0103",
-    serverPrvKey: "fcc79953d8a751bf41db661592dc34d30004b1a651ffa0725b03ac227641499d",
+    colonyId: "7450a5ef27bf2f44cdf9531fd30f15f63a83011320d2f0f85571e3438ae05351",
+    colonyPrvKey: "5c73309c6b9f2d87c2b8216ec1ec3fa5880d2a3a3750758a5a2468e97556fd38",
+    executorId: "eb6ecf1cfefda6eec2ffd3d8eeb0a9f4ad574a24f557001cd144abc4a4251671",
+    executorPrvKey: "69d822dc164593503f4ee41a3538c4458ab84b21ea3f2c2d99c1661f172cbaf9",
+    serverId: "2d6b3edf26b792d538604a6a8b8f2de3159c0bd4a419c7515c1d5bae16f2fc2c",
+    serverPrvKey: "35c6b50c44d2086756dddef7a6e57ad31b6a2bc9f1678e316405872dbdf2e629",
     host: host,
     port: port,
     tls: tls

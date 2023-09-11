@@ -22,7 +22,8 @@ export const MENU: IMenuItem[] = [
     },
     {
         name: "Executors",
-        icon: "fas fa-microchip",
+        //icon: "fas fa-microchip",
+        icon: "fas fa-robot",
         path: '/executors'
     },
     {
@@ -39,6 +40,12 @@ export const MENU: IMenuItem[] = [
         name: "Workflows",
         icon: "fas fa-cubes",
         path: '/workflows'
+    },
+    {
+        name: "Filesystem",
+        //icon: "fa-solid fa-arrows-spin",
+        icon: "fas fa-folder",
+        path: '/filesystem'
     },
     {
         name: "Cron",

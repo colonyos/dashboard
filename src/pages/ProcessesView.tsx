@@ -48,7 +48,7 @@ class ProcessesView extends Component {
             let process = processes[i]
 
             items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
-                <td> {process.processid}</td>
+                <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
                 <td> {parseTime(process.submissiontime)}</td>
                 <td> {process.spec.funcname} </td>
                 <td> {parseArr(process.spec.args)} </td>

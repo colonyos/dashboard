@@ -90,7 +90,7 @@ class ExecutorsView extends Component {
             }
 
             items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
-                <td> {executor.executorname}</td>
+                <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
                 <td> {executor.executortype}</td>
                 <td> {rtstate2str(executor.state)}</td>
                 <td> {parseTime(executor.commissiontime)}</td>
