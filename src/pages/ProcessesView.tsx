@@ -4,12 +4,13 @@ import { global } from '../global'
 import Table from 'react-bootstrap/Table';
 import { parseTime } from '@app/utils/helpers';
 import { parseArr } from '@app/utils/helpers';
+import Button from 'react-bootstrap/Button';
 
 class ProcessesView extends Component {
     constructor() {
         super();
         this.state = {
-            processes: [],
+            processes: [], state: -1
         };
     }
 
@@ -18,11 +19,11 @@ class ProcessesView extends Component {
         let state = this.props.state
         api.load().then(() => {
             api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
-                this.setState({ processes: processes })
+                this.setState({ processes: processes, state: state })
             })
             this.interval = setInterval(() => {
                 api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
-                    this.setState({ processes: processes })
+                    this.setState({ processes: processes, state: state })
                 })
             }, 1000)
         })
@@ -38,7 +39,17 @@ class ProcessesView extends Component {
             props.navigate("/process?processid=" + processid)
         }
 
-        const { processes } = this.state;
+        const DeleteProcess = (e, processid) => {
+            console.log(processid)
+            let api = global.colonies
+            api.load().then(() => {
+                api.DeleteProcess(processid, global.executorPrvKey)
+            })
+            e.stopPropagation();
+            props.navigate("/processes")
+        }
+
+        const { processes, state } = this.state;
         const items = []
         if (processes == null) {
             return (<h5>No processes found</h5>)
@@ -47,13 +58,28 @@ class ProcessesView extends Component {
         for (let i = 0; i < processes.length; i++) {
             let process = processes[i]
 
-            items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
-                <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
-                <td> {parseTime(process.submissiontime)}</td>
-                <td> {process.spec.funcname} </td>
-                <td> {parseArr(process.spec.args)} </td>
-                <td> {process.spec.conditions.executortype}</td>
-            </tr>)
+            if (state == 0) {
+                items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
+                    <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
+                    <td> {parseTime(process.submissiontime)}</td>
+                    <td> {process.spec.funcname} </td>
+                    <td> {parseArr(process.spec.args)} </td>
+                    <td> {process.spec.conditions.executortype}</td>
+                    <td>
+                        <Button variant="secondary" onClick={(e) => DeleteProcess(e, process.processid)}>
+                            Delete
+                        </Button>
+                    </td>
+                </tr>)
+            } else {
+                items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
+                    <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
+                    <td> {parseTime(process.submissiontime)}</td>
+                    <td> {process.spec.funcname} </td>
+                    <td> {parseArr(process.spec.args)} </td>
+                    <td> {process.spec.conditions.executortype}</td>
+                </tr>)
+            }
         }
 
         return (

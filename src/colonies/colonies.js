@@ -232,6 +232,15 @@ class ColonyRuntime {
         return this.sendRPCMsg(msg, prvKey)
     }
 
+    DeleteProcess(processid, prvKey) {
+        var msg = {
+            "msgtype": "deleteprocessmsg",
+            "processid": processid
+        }
+
+        return this.sendRPCMsg(msg, prvKey)
+    }
+
     getProcess(processId, prvKey) {
         var msg = {
             "msgtype": "getprocessmsg",
