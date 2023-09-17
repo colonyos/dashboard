@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Main from '@modules/main/Main';
-import Login from '@modules/login/Login';
+//import Login from '@modules/login/Login';
 import { useWindowSize } from '@app/hooks/useWindowSize';
 import { calculateWindowSize } from '@app/utils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,8 @@ import SnapshotTab from '@pages/SnapshotTab';
 import Profile from '@pages/Profile';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
+import keycloak from './keycloak'
+import { ReactKeycloakProvider } from '@react-keycloak/web'
 
 const App = () => {
     const windowSize = useWindowSize();
@@ -40,44 +42,43 @@ const App = () => {
     }, [windowSize]);
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/login" element={<PublicRoute />}>
-                    <Route path="/login" element={<Login />} />
-                </Route>
-                <Route path="/" element={<PrivateRoute />}>
-                    <Route path="/" element={<Main />}>
-                        <Route path="/executors" element={<ExecutorsTab />} />
-                        <Route path="/executor" element={<Executor />} />
-                        <Route path="/functions" element={<Functions />} />
-                        <Route path="/process" element={<Process />} />
-                        <Route path="/log" element={<Log />} />
-                        <Route path="/workflow" element={<WorkflowTab />} />
-                        <Route path="/processes" element={<ProcessesTab />} />
-                        <Route path="/workflows" element={<WorkflowsTab />} />
-                        <Route path="/crons" element={<Crons />} />
-                        <Route path="/generators" element={<Generators />} />
-                        <Route path="/server" element={<Server />} />
-                        <Route path="/filesystem" element={<FilesystemTab />} />
-                        <Route path="/files" element={<FilesTab />} />
-                        <Route path="/file" element={<FileTab />} />
-                        <Route path="/snapshot" element={<SnapshotTab />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/" element={<Dashboard />} />
+        <ReactKeycloakProvider authClient={keycloak}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<PrivateRoute />}>
+                        <Route path="/" element={<Main />}>
+                            <Route path="/executors" element={<ExecutorsTab />} />
+                            <Route path="/executor" element={<Executor />} />
+                            <Route path="/functions" element={<Functions />} />
+                            <Route path="/process" element={<Process />} />
+                            <Route path="/log" element={<Log />} />
+                            <Route path="/workflow" element={<WorkflowTab />} />
+                            <Route path="/processes" element={<ProcessesTab />} />
+                            <Route path="/workflows" element={<WorkflowsTab />} />
+                            <Route path="/crons" element={<Crons />} />
+                            <Route path="/generators" element={<Generators />} />
+                            <Route path="/server" element={<Server />} />
+                            <Route path="/filesystem" element={<FilesystemTab />} />
+                            <Route path="/files" element={<FilesTab />} />
+                            <Route path="/file" element={<FileTab />} />
+                            <Route path="/snapshot" element={<SnapshotTab />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/" element={<Dashboard />} />
+                        </Route>
                     </Route>
-                </Route>
-            </Routes>
-            <ToastContainer
-                autoClose={3000}
-                draggable={false}
-                position="top-right"
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnHover
-            />
-        </BrowserRouter>
+                </Routes>
+                <ToastContainer
+                    autoClose={3000}
+                    draggable={false}
+                    position="top-right"
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnHover
+                />
+            </BrowserRouter>
+        </ReactKeycloakProvider >
     );
 };
 

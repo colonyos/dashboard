@@ -1,10 +1,20 @@
-import React from 'react';
-import {Navigate, Outlet} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import { useKeycloak } from "@react-keycloak/web";
 
 const PrivateRoute = () => {
-  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
+    const { keycloak, initialized } = useKeycloak();
+
+    if (!initialized) {
+        return <div></div>;
+    }
+
+    if (!keycloak.authenticated) {
+        keycloak.login(); // Automatically redirect if not authenticated
+        return <div></div>;
+    }
+
+    return <Outlet />;
 };
+
 
 export default PrivateRoute;

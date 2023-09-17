@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { logoutUser } from '@store/reducers/auth';
 import styled from 'styled-components';
 import { PfDropdown, PfImage } from '@profabric/react-components';
+import { useKeycloak } from "@react-keycloak/web";
 
 const StyledSmallUserImage = styled(PfImage)`
   margin-top: 3px;
@@ -85,11 +86,12 @@ const UserDropdown = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.auth.currentUser);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const { keycloak } = useKeycloak();
 
     const logOut = (event: any) => {
         event.preventDefault();
         setDropdownOpen(false);
-        dispatch(logoutUser());
+        keycloak.logout();
         navigate('/login');
     };
 
