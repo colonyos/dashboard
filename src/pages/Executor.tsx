@@ -246,7 +246,6 @@ class Page extends Component {
                     </div>
                 </section>
             </div>
-
         );
     }
 }

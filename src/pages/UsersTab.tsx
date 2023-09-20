@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { ContentHeader } from '@components';
 import ExecutorsView from './ExecutorsView';
+import User from './User';
+import UsersView from './UsersView';
 import ExecutorsMapView from './ExecutorsMapView';
 import RegisterExecutorView from './RegisterExecutorView';
 import Tab from 'react-bootstrap/Tab';
@@ -31,13 +33,13 @@ class UsersTabs extends React.Component {
     }
 
     render() {
-        let tab1 = <Tab eventKey={"user-tab"} title={global.firstname + " " + global.lastname}>
-            <ContentHeader title="Users" />
+        let tab1 = <Tab eventKey={"user-tab"} title={"User Info"}>
+            <ContentHeader title="User Info" />
             <section className="content">
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-body">
-                            <ExecutorsView />
+                            <User />
                         </div>
                     </div>
                 </div>
@@ -45,7 +47,16 @@ class UsersTabs extends React.Component {
         </Tab>;
 
         let tab2 = <Tab eventKey={"users-tab"} title="Users">
-            <ExecutorsMapView />
+            <ContentHeader title="User Info" />
+            <section className="content">
+                <div className="container-fluid">
+                    <div className="card">
+                        <div className="card-body">
+                            <UsersView />
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Tab>;
 
         return (

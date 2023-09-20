@@ -65,13 +65,13 @@ let m: IMenuItem[] = [
     },
 ];
 
-console.log(global.serverId)
-console.log(global.serverPrvKey)
+// console.log(global.serverId)
+// console.log(global.serverPrvKey)
 
-if (global.serverId == "" || global.serverPrvKey == "") {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX removing")
-    m = m.filter(item => item.name !== "Server");
-}
+// if (global.serverId == "" || global.serverPrvKey == "") {
+//     console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX removing")
+//     m = m.filter(item => item.name !== "Server");
+// }
 
 export let MENU = m;
 
