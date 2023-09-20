@@ -10,7 +10,7 @@ const Failed = 3;
 import App from '@app/App';
 import Crypto from './crypto/crypto.js';
 
-class ColonyRuntime {
+class ColonyEndpoint {
     constructor(host, port) {
         this.crypto = new Crypto()
         this.host = host
@@ -426,4 +426,4 @@ class ColonyRuntime {
     }
 }
 
-export default ColonyRuntime;
+export default ColonyEndpoint;

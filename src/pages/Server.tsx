@@ -16,8 +16,6 @@ class ServerInfoView extends Component {
 
     render() {
         let serverInfo = this.props.serverInfo
-        console.log(serverInfo)
-
         return (
             <Table striped bordered hover >
                 <tbody>
@@ -94,7 +92,7 @@ class ClusterView extends Component {
             );
         } else {
             return (
-                <h5>No crons found</h5>
+                <h5>No nodes found</h5>
             )
         }
     }
@@ -110,6 +108,10 @@ class Page extends Component {
     }
 
     componentDidMount() {
+        if (global.serverId == "" && global.serverPrvKey == "") {
+            return
+        }
+
         let api = global.colonies
         let cluster = {}
         api.load().then(() => {
@@ -120,6 +122,7 @@ class Page extends Component {
             }).then((serverInfo) => {
                 this.setState({ serverInfo: serverInfo, cluster: cluster })
             }).catch((err) => {
+                console.log(err)
                 console.log(err)
             })
             this.interval = setInterval(() => {
@@ -132,7 +135,7 @@ class Page extends Component {
                 }).catch((err) => {
                     console.log(err)
                 })
-            }, 60000)
+            }, 5000)
         })
     }
 
@@ -142,6 +145,11 @@ class Page extends Component {
 
     render() {
         const { serverInfo, cluster } = this.state
+        if (global.serverId == "" && global.serverPrvKey == "") {
+            return (
+                <div></div>
+            );
+        }
         return (
             <div>
                 <ContentHeader title="Colonies Server Info" />

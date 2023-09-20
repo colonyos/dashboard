@@ -16,7 +16,6 @@ window.PF = {
     }
 };
 
-//const runtime = new ColonyRuntime("localhost", "50080")
 const container: any = document.getElementById('root');
 const root = createRoot(container);
 root.render(

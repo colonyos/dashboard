@@ -6,6 +6,7 @@ import RegisterExecutorView from './RegisterExecutorView';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import React, { Component } from "react";
+import { global } from '../global'
 
 let interval = null
 
@@ -60,16 +61,28 @@ class ExecutorsTabs extends React.Component {
             </section>
         </Tab>;
 
-        return (
-            <Tabs
-                defaultActiveKey="executors"
-                activeKey={this.state.key}
-                onSelect={this.handleSelect}>
-                {tab1}
-                {tab2}
-                {tab3}
-            </Tabs>
-        );
+        if (global.colonyPrvKey == "") {
+            return (
+                <Tabs
+                    defaultActiveKey="executors"
+                    activeKey={this.state.key}
+                    onSelect={this.handleSelect}>
+                    {tab1}
+                    {tab2}
+                </Tabs>
+            );
+        } else {
+            return (
+                <Tabs
+                    defaultActiveKey="executors"
+                    activeKey={this.state.key}
+                    onSelect={this.handleSelect}>
+                    {tab1}
+                    {tab2}
+                    {tab3}
+                </Tabs>
+            );
+        }
     }
 }
 

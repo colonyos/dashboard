@@ -1,11 +1,9 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MenuItem } from '@components';
 import { PfImage } from '@profabric/react-components';
 import styled from 'styled-components';
-import { SidebarSearch } from '@app/components/sidebar-search/SidebarSearch';
-import i18n from '@app/utils/i18n';
+import { global } from '../../../global'
 
 export interface IMenuItem {
     name: string;
@@ -14,15 +12,19 @@ export interface IMenuItem {
     children?: Array<IMenuItem>;
 }
 
-export const MENU: IMenuItem[] = [
+let m: IMenuItem[] = [
     {
         name: "Dashboard",
         icon: "fas fa-tachometer-alt",
         path: '/'
     },
     {
+        name: "Users",
+        icon: "fas fa-user",
+        path: '/users'
+    },
+    {
         name: "Executors",
-        //icon: "fas fa-microchip",
         icon: "fas fa-robot",
         path: '/executors'
     },
@@ -43,29 +45,35 @@ export const MENU: IMenuItem[] = [
     },
     {
         name: "Filesystem",
-        //icon: "fa-solid fa-arrows-spin",
         icon: "fas fa-folder",
         path: '/filesystem'
     },
     {
         name: "Cron",
-        //icon: "fa-solid fa-arrows-spin",
         icon: "fas fa-clock",
         path: '/crons'
     },
     {
         name: "Generators",
-        //icon: "fa-solid fa-arrows-spin",
         icon: "fas fa-heartbeat",
         path: '/generators'
     },
     {
         name: "Server",
-        //icon: "fa-solid fa-arrows-spin",
         icon: "fas fa-server",
         path: '/server'
     },
 ];
+
+console.log(global.serverId)
+console.log(global.serverPrvKey)
+
+if (global.serverId == "" || global.serverPrvKey == "") {
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX removing")
+    m = m.filter(item => item.name !== "Server");
+}
+
+export let MENU = m;
 
 const StyledBrandImage = styled(PfImage)`
   float: left;
@@ -81,7 +89,6 @@ const StyledUserImage = styled(PfImage)`
 `;
 
 const MenuSidebar = () => {
-    const user = useSelector((state: any) => state.auth.currentUser);
     const sidebarSkin = useSelector((state: any) => state.ui.sidebarSkin);
     const menuItemFlat = useSelector((state: any) => state.ui.menuItemFlat);
     const menuChildIndent = useSelector((state: any) => state.ui.menuChildIndent);

@@ -89,19 +89,29 @@ class ExecutorsView extends Component {
                 approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
             }
 
-            items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
-                <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
-                <td> {executor.executortype}</td>
-                <td> {rtstate2str(executor.state)}</td>
-                <td> {parseTime(executor.commissiontime)}</td>
-                <td> {parseTime(executor.lastheardfromtime)}</td>
-                <td>
-                    {approveButton}{' '}
-                    <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorid)}>
-                        Remove
-                    </Button>
-                </td>
-            </tr >)
+            if (global.colonyPrvKey != "") {
+                items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
+                    <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
+                    <td> {executor.executortype}</td>
+                    <td> {rtstate2str(executor.state)}</td>
+                    <td> {parseTime(executor.commissiontime)}</td>
+                    <td> {parseTime(executor.lastheardfromtime)}</td>
+                    <td>
+                        {approveButton}{' '}
+                        <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorid)}>
+                            Remove
+                        </Button>
+                    </td>
+                </tr >)
+            } else {
+                items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
+                    <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
+                    <td> {executor.executortype}</td>
+                    <td> {rtstate2str(executor.state)}</td>
+                    <td> {parseTime(executor.commissiontime)}</td>
+                    <td> {parseTime(executor.lastheardfromtime)}</td>
+                </tr >)
+            }
         }
 
         return (

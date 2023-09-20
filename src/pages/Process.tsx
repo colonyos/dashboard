@@ -12,19 +12,8 @@ import { parseArr } from '@app/utils/helpers';
 import { calcExecTime } from '@app/utils/helpers';
 import { calcWaitTime } from '@app/utils/helpers';
 import { calcRemainingTime } from '@app/utils/helpers';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'
-import { PfImage } from '@profabric/react-components';
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-
-const StyledContentImage = styled(PfImage)`
-  display: inline-block;
-  margin-left: 5px;
-  &:first-child {
-    margin-left: 0;
-  }
-`;
 
 const TimelineView = (props, { isActive }: { isActive: boolean }) => {
     const items = []

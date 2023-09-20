@@ -1,7 +1,9 @@
-import { SmallBox } from '@app/components';
 import { ContentHeader } from '@components';
-import React, { Component } from "react"
+import React, { Component, useContext } from "react"
 import { global } from '../global'
+import { useState } from 'react';
+import ErrorModalContext from './ErrorModalContext';
+import ErrorModalComponent from './ErrorModalComponent';
 
 const DashboardView = (props) => {
     let stats = props.stats
@@ -131,15 +133,32 @@ class Page extends Component {
         super();
         this.state = {
             stats: {},
+            show: false
         };
     }
 
-    componentDidMount() {
-        let search = window.location.search;
-        let params = new URLSearchParams(search);
-        let processid = params.get('processid');
+    setShow = (show) => {
+        this.setState({ show });
+    };
 
+    setMessage = (message) => {
+        this.setState({ message });
+    };
+
+    setHeading = (heading) => {
+        this.setState({ heading });
+    };
+
+    componentDidMount() {
         let api = global.colonies
+
+        console.log(global.error)
+        if (global.error != "") {
+            this.setHeading("Failed to connect to Colonies server")
+            this.setMessage(global.error)
+            this.setShow(true);
+        }
+
         api.load().then(() => {
             api.getColonyStats(global.colonyId, global.executorPrvKey).then((stats) => {
                 this.setState({ stats: stats })
@@ -159,7 +178,19 @@ class Page extends Component {
     render() {
         const { stats } = this.state
         return (
-            <DashboardView stats={stats} />
+            <div>
+                <ErrorModalContext.Provider value={{
+                    show: this.state.show,
+                    setShow: this.setShow,
+                    heading: this.state.heading,
+                    message: this.state.message,
+                    setMessage: this.setMessage
+                }}>
+                    <DashboardView stats={stats} />
+                    <ErrorModalComponent />
+                </ErrorModalContext.Provider>
+
+            </div>
         );
     }
 }
