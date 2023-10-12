@@ -21,7 +21,6 @@ class Page extends Component {
     }
 
     componentDidMount() {
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
         let search = window.location.search;
         let params = new URLSearchParams(search);
         let label = params.get('label');
@@ -93,12 +92,12 @@ class Page extends Component {
                                 <Table striped bordered hover >
                                     <tbody>
                                         <tr>
-                                            <td> Added</td>
-                                            <td> {parseTime(revision.added)}</td>
-                                        </tr>
-                                        <tr>
                                             <th style={{ fontWeight: 'bold' }}>Revision Id</th>
                                             <td> {revision.fileid}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> Added</td>
+                                            <td> {parseTime(revision.added)}</td>
                                         </tr>
                                         <tr>
                                             <td> Checksum Alg</td>

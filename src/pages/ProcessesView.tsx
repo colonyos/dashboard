@@ -97,7 +97,6 @@ class ProcessesView extends Component {
                     {items}
                 </tbody>
             </Table >
-
         );
     }
 }

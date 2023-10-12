@@ -141,7 +141,7 @@ class FunctionSpecView extends Component {
                     </tr>
                     <tr>
                         <th>Keyword Arguments</th>
-                        <td>{parseDict(process.spec.kwargs)}</td>
+                        <td>{JSON.stringify(process.spec.kwargs, null, ' ')}</td>
                     </tr>
                     <tr>
                         <th>Node Name</th>
@@ -270,6 +270,8 @@ class ProcessView extends Component {
 
         let process = this.props.process
 
+        console.log(process.out)
+
         return (
             <Table striped bordered hover >
                 <tbody>
@@ -283,15 +285,15 @@ class ProcessView extends Component {
                     </tr>
                     <tr>
                         <th>Children</th>
-                        <td>{process.children}</td>
+                        <td>{JSON.stringify(process.children, null, ' ')}</td>
                     </tr>
                     <tr>
                         <th>Input</th>
-                        <td>{process.in}</td>
+                        <td>{JSON.stringify(process.in, null, ' ')}</td>
                     </tr>
                     <tr>
                         <th>Output</th>
-                        <td>{process.out}</td>
+                        <td>{JSON.stringify(process.out, null, ' ')}</td>
                     </tr>
                     <tr>
                         <th>Errors</th>
