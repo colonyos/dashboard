@@ -1,8 +1,8 @@
 import Keycloak from "keycloak-js";
 const keycloak = new Keycloak({
     url: "https://keycloak.colonyos.io",
-    realm: "colonyosdev",
-    clientId: "colonies-dashboard-auth-dev",
+    realm: "colonyos",
+    clientId: "colonies-dashboard-auth",
     onLoad: "login-required"
     //onLoad: "check-sso",
     //KeycloakResponseType: "code"
