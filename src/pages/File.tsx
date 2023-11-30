@@ -28,7 +28,7 @@ class Page extends Component {
 
         let api = global.colonies
         api.load().then(() => {
-            api.getFile(global.colonyId, label, name, global.executorPrvKey).then((file) => {
+            api.getFile(global.colonyName, label, name, global.executorPrvKey).then((file) => {
                 console.log(file)
                 this.setState({ file: file, label: label })
             })

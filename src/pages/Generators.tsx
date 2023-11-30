@@ -70,13 +70,13 @@ class Page extends Component {
     componentDidMount() {
         let api = global.colonies
         api.load().then(() => {
-            api.getGenerators(global.colonyId, global.executorPrvKey).then((generators) => {
+            api.getGenerators(global.colonyName, global.executorPrvKey).then((generators) => {
                 this.setState({ generators: generators })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                api.getGenerators(global.colonyId, global.executorPrvKey).then((generators) => {
+                api.getGenerators(global.colonyName, global.executorPrvKey).then((generators) => {
                     this.setState({ generators: generators })
                 }).catch((err) => {
                     console.log(err)

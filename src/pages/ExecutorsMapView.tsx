@@ -35,12 +35,20 @@ class ExecutorsMapView extends Component {
         let api = global.colonies
         let state = this.props.state
         api.load().then(() => {
-            api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
-                this.setState({ executors: executors })
+            api.getExecutors(global.colonyName, global.executorPrvKey).then((executors) => {
+                if (executors == null) {
+                    this.setState({ executors: [] })
+                } else {
+                    this.setState({ executors: executors })
+                }
             })
             this.interval = setInterval(() => {
-                api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
-                    this.setState({ executors: executors })
+                api.getExecutors(global.colonyName, global.executorPrvKey).then((executors) => {
+                    if (executors == null) {
+                        this.setState({ executors: [] })
+                    } else {
+                        this.setState({ executors: executors })
+                    }
                 })
             }, 10000)
 

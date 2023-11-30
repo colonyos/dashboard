@@ -16,7 +16,7 @@ const handleRegister = (e, tabs) => {
     let executorType = e.target.form.executortype.value
     let long = e.target.form.long.value
     let lat = e.target.form.lat.value
-    let colonyId = e.target.form.colonyid.value
+    let colonyName = e.target.form.colonyname.value
     let executorId = e.target.form.executorid.value
     let executorPrvKey = e.target.form.executorprvkey.value
 
@@ -24,7 +24,7 @@ const handleRegister = (e, tabs) => {
         executorid: executorId,
         executortype: executorType,
         executorname: executorName,
-        colonyid: colonyId,
+        colonyname: colonyName,
         state: 0,
         commissiontime: "0001-01-01T00:00:00Z",
         lastheardfromtime: "0001-01-01T00:00:00Z",
@@ -99,7 +99,7 @@ class ExecutorsView extends Component {
 
                 <Form.Group className="mb-3" controlId="Colony Id">
                     <Form.Label>Colony Id</Form.Label>
-                    <Form.Control name="colonyid" plaintext readOnly defaultValue={global.colonyId} />
+                    <Form.Control name="colonyname" plaintext readOnly defaultValue={global.colonyName} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="Executor Id">
@@ -130,7 +130,7 @@ class ExecutorsView extends Component {
                                     <div><code>export COLONIES_TLS="{global.tls}"</code></div>
                                     <div><code>export COLONIES_SERVER_HOST="{global.host}"</code></div>
                                     <div><code>export COLONIES_SERVER_PORT="{global.port}"</code></div>
-                                    <div><code>export COLONIES_COLONY_ID="{global.colonyId}"</code></div>
+                                    <div><code>export COLONIES_COLONY_ID="{global.colonyName}"</code></div>
                                     <div><code>export COLONIES_EXECUTOR_ID="{executorId}"</code></div>
                                     <div><code>export COLONIES_EXECUTOR_PRVKEY="{executorPrvKey}"</code></div>
                                     <div><code>export COLONIES_EXECUTOR_TYPE="<span id="env-colonies"></span>"</code></div>

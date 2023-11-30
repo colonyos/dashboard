@@ -1,5 +1,5 @@
 export let global = {
-    colonyId: "",
+    colonyName: "",
     colonyPrvKey: "",
     executorId: "",
     executorPrvKey: "",

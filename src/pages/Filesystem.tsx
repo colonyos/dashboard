@@ -17,7 +17,7 @@ class Page extends Component {
     componentDidMount() {
         let api = global.colonies
         api.load().then(() => {
-            api.getFileLabels(global.colonyId, global.executorPrvKey).then((labels) => {
+            api.getFileLabels(global.colonyName, global.executorPrvKey).then((labels) => {
                 console.log(labels)
                 this.setState({ labels: labels })
                 // if (logs != null) {

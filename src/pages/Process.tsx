@@ -200,7 +200,7 @@ class ConditionsView extends Component {
                 <tbody>
                     <tr>
                         <th>Colony Id</th>
-                        <td>{process.spec.conditions.colonyid}</td>
+                        <td>{process.spec.conditions.colonyname}</td>
                     </tr>
                     <tr>
                         <th>Executor Type</th>
@@ -400,7 +400,7 @@ class AttributeView extends Component {
                             </tr>
                             <tr>
                                 <th>Target Colony Id</th>
-                                <td>{attr.targetcolonyid}</td>
+                                <td>{attr.targetcolonyname}</td>
                             </tr>
                             <tr>
                                 <th>Target ProcessGraph Id</th>

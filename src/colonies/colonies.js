@@ -95,10 +95,10 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getColony(colonyid, prvKey) {
+    getColony(colonyname, prvKey) {
         var msg = {
             "msgtype": "getcolonymsg",
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
@@ -122,19 +122,20 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getExecutors(colonyid, prvKey) {
+    getExecutors(colonyname, prvKey) {
         var msg = {
             "msgtype": "getexecutorsmsg",
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getExecutor(executorid, prvKey) {
+    getExecutor(colonyname, executorname, prvKey) {
         var msg = {
             "msgtype": "getexecutormsg",
-            "executorid": executorid
+            "colonyname": colonyname,
+            "executorname": executorname
         }
 
         return this.sendRPCMsg(msg, prvKey)
@@ -152,51 +153,51 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getFileLabels(colonyid, prvKey) {
+    getFileLabels(colonyname, prvKey) {
         var msg = {
             "msgtype": "getfilelabelsmsg",
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getFiles(colonyid, label, prvKey) {
+    getFiles(colonyname, label, prvKey) {
         var msg = {
             "msgtype": "getfilesmsg",
             "label": label,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getFile(colonyid, label, name, prvKey) {
+    getFile(colonyname, label, name, prvKey) {
         var msg = {
             "msgtype": "getfilemsg",
             "label": label,
             "name": name,
             "latest": false,
             "fileid": "",
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getSnapshots(colonyid, prvKey) {
+    getSnapshots(colonyname, prvKey) {
         var msg = {
             "msgtype": "getsnapshotsmsg",
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getSnapshot(colonyid, snapshotid, prvKey) {
+    getSnapshot(colonyname, snapshotid, prvKey) {
         var msg = {
             "msgtype": "getsnapshotmsg",
-            "colonyid": colonyid,
+            "colonyname": colonyname,
             "snapshotid": snapshotid
         }
 
@@ -251,10 +252,10 @@ class ColonyEndpoint {
     }
 
 
-    getProcesses(colonyId, count, state, prvKey) {
+    getProcesses(colonyName, count, state, prvKey) {
         var msg = {
             "msgtype": "getprocessesmsg",
-            "colonyid": colonyId,
+            "colonyname": colonyName,
             "count": count,
             "state": state
         }
@@ -262,32 +263,32 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getFunctions(colonyId, prvKey) {
+    getFunctions(colonyName, prvKey) {
         var msg = {
             "msgtype": "getfunctionsmsg",
-            "colonyid": colonyId
+            "colonyname": colonyName
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    assign(colonyid, timeout, prvKey) {
+    assign(colonyname, timeout, prvKey) {
         var msg = {
             "msgtype": "assignprocessmsg",
             "latest": false,
             "timeout": timeout,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    assignLatest(colonyid, timeout, prvKey) {
+    assignLatest(colonyname, timeout, prvKey) {
         var msg = {
             "msgtype": "assignprocessmsg",
             "latest": true,
             "timeout": timeout,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
@@ -318,21 +319,21 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getColonyStats(colonyId, prvKey) {
+    getColonyStats(colonyName, prvKey) {
         var msg = {
             "msgtype": "getcolonystatsmsg",
-            "colonyid": colonyId
+            "colonyname": colonyName
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getWorkflows(colonyid, count, state, prvKey) {
+    getWorkflows(colonyname, count, state, prvKey) {
         var msg = {
             "msgtype": "getprocessgraphsmsg",
             "count": count,
             "state": state,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
@@ -347,21 +348,21 @@ class ColonyEndpoint {
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getCrons(colonyid, prvKey) {
+    getCrons(colonyname, prvKey) {
         var msg = {
             "msgtype": "getcronsmsg",
             "count": 100,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)
     }
 
-    getGenerators(colonyid, prvKey) {
+    getGenerators(colonyname, prvKey) {
         var msg = {
             "msgtype": "getgeneratorsmsg",
             "count": 100,
-            "colonyid": colonyid
+            "colonyname": colonyname
         }
 
         return this.sendRPCMsg(msg, prvKey)

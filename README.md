@@ -18,3 +18,6 @@ Password: admin
 
 # Links
 - https://github.com/erdkse/adminlte-3-react
+
+# Keycloak
+Set Web orgins to *

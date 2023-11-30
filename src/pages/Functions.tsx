@@ -41,7 +41,7 @@ class FunctionsView extends Component {
                     funcname: func.funcname,
                     desc: func.desc,
                     functionid: func.functionid,
-                    colonyid: func.colonyid,
+                    colonyname: func.colonyname,
                 }
             } else {
                 let value = dict[func.funcname]
@@ -85,7 +85,7 @@ class FunctionsView extends Component {
                             </tr>
                             <tr>
                                 <th>Colony Id</th>
-                                <td>{func.colonyid}</td>
+                                <td>{func.colonyname}</td>
                             </tr>
                             <tr>
                                 <th>Min Wait Time</th>
@@ -137,13 +137,13 @@ class Page extends Component {
     componentDidMount() {
         let api = global.colonies
         api.load().then(() => {
-            api.getFunctions(global.colonyId, global.executorPrvKey).then((funcs) => {
+            api.getFunctions(global.colonyName, global.executorPrvKey).then((funcs) => {
                 this.setState({ funcs: funcs })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                api.getFunctions(global.colonyId, global.executorPrvKey).then((funcs) => {
+                api.getFunctions(global.colonyName, global.executorPrvKey).then((funcs) => {
                     this.setState({ funcs: funcs })
                 }).catch((err) => {
                     console.log(err)

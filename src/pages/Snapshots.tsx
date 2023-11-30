@@ -17,7 +17,7 @@ class Page extends Component {
     componentDidMount() {
         let api = global.colonies
         api.load().then(() => {
-            api.getSnapshots(global.colonyId, global.executorPrvKey).then((snapshots) => {
+            api.getSnapshots(global.colonyName, global.executorPrvKey).then((snapshots) => {
                 console.log(snapshots)
                 this.setState({ snapshots: snapshots })
             })

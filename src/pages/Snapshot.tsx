@@ -23,7 +23,7 @@ class Page extends Component {
 
         let api = global.colonies
         api.load().then(() => {
-            api.getSnapshot(global.colonyId, snapshotid, global.executorPrvKey).then((snapshot) => {
+            api.getSnapshot(global.colonyName, snapshotid, global.executorPrvKey).then((snapshot) => {
                 console.log(snapshot)
                 this.setState({ snapshot: snapshot })
             })
@@ -63,7 +63,7 @@ class Page extends Component {
                                     </tr>
                                     <tr>
                                         <td> Colony Id</td>
-                                        <td> {snapshot.colonyid} </td>
+                                        <td> {snapshot.colonyname} </td>
                                     </tr>
                                     <tr>
                                         <td> Added</td>

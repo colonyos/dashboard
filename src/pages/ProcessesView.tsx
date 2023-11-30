@@ -18,11 +18,11 @@ class ProcessesView extends Component {
         let api = global.colonies
         let state = this.props.state
         api.load().then(() => {
-            api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
+            api.getProcesses(global.colonyName, 100, state, global.executorPrvKey).then((processes) => {
                 this.setState({ processes: processes, state: state })
             })
             this.interval = setInterval(() => {
-                api.getProcesses(global.colonyId, 100, state, global.executorPrvKey).then((processes) => {
+                api.getProcesses(global.colonyName, 100, state, global.executorPrvKey).then((processes) => {
                     this.setState({ processes: processes, state: state })
                 })
             }, 1000)

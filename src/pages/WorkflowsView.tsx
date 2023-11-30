@@ -17,7 +17,7 @@ class WorkflowsView extends Component {
         let api = global.colonies
         let state = this.props.state
         api.load().then(() => {
-            api.getWorkflows(global.colonyId, 100, state, global.executorPrvKey).then((workflows) => {
+            api.getWorkflows(global.colonyName, 100, state, global.executorPrvKey).then((workflows) => {
                 for (let i in workflows) {
                     let workflow = workflows[i]
                 }
@@ -25,7 +25,7 @@ class WorkflowsView extends Component {
                 this.setState({ workflows: workflows })
             })
             this.interval = setInterval(() => {
-                api.getWorkflows(global.colonyId, 100, state, global.executorPrvKey).then((workflows) => {
+                api.getWorkflows(global.colonyName, 100, state, global.executorPrvKey).then((workflows) => {
                     this.setState({ workflows: workflows })
                 })
             }, 1000)

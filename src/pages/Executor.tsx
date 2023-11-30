@@ -38,7 +38,7 @@ class ExecutorView extends Component {
                     </tr>
                     <tr>
                         <th>Colony Id</th>
-                        <td>{executor.colonyid}</td>
+                        <td>{executor.colonyname}</td>
                     </tr>
                     <tr>
                         <th>Executor Type</th>
@@ -191,16 +191,15 @@ class Page extends Component {
     componentDidMount() {
         let search = window.location.search;
         let params = new URLSearchParams(search);
-        console.log(params)
-        let executorid = params.get('executorid');
+        let executorname = params.get('executorname');
 
         let api = global.colonies
         api.load().then(() => {
-            api.getExecutor(executorid, global.executorPrvKey).then((executor) => {
+            api.getExecutor(global.colonyName, executorname, global.executorPrvKey).then((executor) => {
                 this.setState({ executor: executor })
             })
             this.interval = setInterval(() => {
-                api.getExecutor(executorid, global.executorPrvKey).then((executor) => {
+                api.getExecutor(executorname, global.executorPrvKey).then((executor) => {
                     this.setState({ executor: executor })
                 })
             }, 60000)

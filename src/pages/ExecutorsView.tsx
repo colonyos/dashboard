@@ -8,7 +8,7 @@ import { ContentHeader } from '@components';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 
-function approveExecutor(executorId) {
+function approveExecutor(executorname) {
     let api = global.colonies
     api.load().then(() => {
         api.approveExecutor(executorId, global.colonyPrvKey)
@@ -17,7 +17,7 @@ function approveExecutor(executorId) {
     })
 }
 
-function rejectExecutor(executorId) {
+function rejectExecutor(executorname) {
     let api = global.colonies
     api.load().then(() => {
         api.rejectExecutor(executorId, global.colonyPrvKey)
@@ -26,10 +26,10 @@ function rejectExecutor(executorId) {
     })
 }
 
-function unregisterExecutor(executorId) {
+function unregisterExecutor(executorname) {
     let api = global.colonies
     api.load().then(() => {
-        api.removeExecutor(executorId, global.colonyPrvKey)
+        api.removeExecutor(executorname, global.colonyPrvKey)
     }).catch((err) => {
         console.log(err)
     })
@@ -47,11 +47,11 @@ class ExecutorsView extends Component {
         let api = global.colonies
         let state = this.props.state
         api.load().then(() => {
-            api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
+            api.getExecutors(global.colonyName, global.executorPrvKey).then((executors) => {
                 this.setState({ executors: executors })
             })
             this.interval = setInterval(() => {
-                api.getExecutors(global.colonyId, global.executorPrvKey).then((executors) => {
+                api.getExecutors(global.colonyName, global.executorPrvKey).then((executors) => {
                     this.setState({ executors: executors })
                 }).catch((err) => {
                     console.log(err)
@@ -71,10 +71,10 @@ class ExecutorsView extends Component {
         const items = []
         let props = this.props
         if (executors == null) {
-            return (<h5>No workers found</h5>)
+            return (<h5>No Executors found</h5>)
         }
-        const Trigger = (executorid) => {
-            props.navigate("/executor?executorid=" + executorid)
+        const Trigger = (executorname) => {
+            props.navigate("/executor?executorname=" + executorname)
         }
 
         for (let i = 0; i < executors.length; i++) {
@@ -82,15 +82,15 @@ class ExecutorsView extends Component {
 
             let approveButton = null
             if (executor.state == 0) {
-                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorname)}>Approve</Button>
             } else if (executor.state == 1) {
-                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => rejectExecutor(executor.executorid)}>Reject</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => rejectExecutor(executor.executorname)}>Reject</Button>
             } else if (executor.state == 2) {
-                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorid)}>Approve</Button>
+                approveButton = <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => approveExecutor(executor.executorname)}>Approve</Button>
             }
 
             if (global.colonyPrvKey != "") {
-                items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
+                items.push(<tr key={executor.executorname} onClick={() => { Trigger(executor.executorname) }}>
                     <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
                     <td> {executor.executortype}</td>
                     <td> {rtstate2str(executor.state)}</td>
@@ -98,13 +98,13 @@ class ExecutorsView extends Component {
                     <td> {parseTime(executor.lastheardfromtime)}</td>
                     <td>
                         {approveButton}{' '}
-                        <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorid)}>
+                        <Button variant="secondary" style={{ width: "70px", margin: "2px" }} size="sm" onClick={() => unregisterExecutor(executor.executorname)}>
                             Remove
                         </Button>
                     </td>
                 </tr >)
             } else {
-                items.push(<tr key={executor.executorid} onClick={() => { Trigger(executor.executorid) }}>
+                items.push(<tr key={executor.executorname} onClick={() => { Trigger(executor.executorname) }}>
                     <td>  <i class="fas fa-robot"></i> &nbsp; {executor.executorname}</td>
                     <td> {executor.executortype}</td>
                     <td> {rtstate2str(executor.state)}</td>

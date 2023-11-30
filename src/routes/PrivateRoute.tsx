@@ -50,8 +50,8 @@ const PrivateRoute = () => {
                     }
                 }
 
-                if ("colonyid" in userProfile.attributes && userProfile.attributes.colonyid.length == 1) {
-                    global.colonyId = userProfile.attributes.colonyid[0]
+                if ("colonyname" in userProfile.attributes && userProfile.attributes.colonyname.length == 1) {
+                    global.colonyName = userProfile.attributes.colonyname[0]
                 } else {
                     if (global.error == "") {
                         global.error = "ColonyId not specified"
@@ -60,14 +60,6 @@ const PrivateRoute = () => {
 
                 if ("colony_prvkey" in userProfile.attributes && userProfile.attributes.colony_prvkey.length == 1) {
                     global.colonyPrvKey = userProfile.attributes.colony_prvkey[0]
-                }
-
-                if ("userid" in userProfile.attributes && userProfile.attributes.userid.length == 1) {
-                    global.executorId = userProfile.attributes.userid[0]
-                } else {
-                    if (global.error == "") {
-                        global.error = "UserId not specified"
-                    }
                 }
 
                 if ("user_prvkey" in userProfile.attributes && userProfile.attributes.user_prvkey.length == 1) {

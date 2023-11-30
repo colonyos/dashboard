@@ -97,13 +97,13 @@ class Page extends Component {
     componentDidMount() {
         let api = global.colonies
         api.load().then(() => {
-            api.getCrons(global.colonyId, global.executorPrvKey).then((crons) => {
+            api.getCrons(global.colonyName, global.executorPrvKey).then((crons) => {
                 this.setState({ crons: crons })
             }).catch((err) => {
                 console.log(err)
             })
             this.interval = setInterval(() => {
-                api.getCrons(global.colonyId, global.executorPrvKey).then((crons) => {
+                api.getCrons(global.colonyName, global.executorPrvKey).then((crons) => {
                     this.setState({ crons: crons })
                 }).catch((err) => {
                     console.log(err)

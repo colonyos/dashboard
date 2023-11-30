@@ -167,11 +167,11 @@ class Page extends Component {
         }
 
         api.load().then(() => {
-            api.getColonyStats(global.colonyId, global.executorPrvKey).then((stats) => {
+            api.getColonyStats(global.colonyName, global.executorPrvKey).then((stats) => {
                 this.setState({ stats: stats })
             })
             this.interval = setInterval(() => {
-                api.getColonyStats(global.colonyId, global.executorPrvKey).then((stats) => {
+                api.getColonyStats(global.colonyName, global.executorPrvKey).then((stats) => {
                     this.setState({ stats: stats })
                 })
             }, 1000)
