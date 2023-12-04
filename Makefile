@@ -2,7 +2,7 @@ all: container
 .PHONY: all container 
 
 BUILD_IMAGE ?= colonyos/dashboard
-PUSH_IMAGE ?= colonyos/dashboard:v1.0.6
+PUSH_IMAGE ?= colonyos/dashboard:v1.0.7
 
 container:
 	docker build -t $(BUILD_IMAGE) .
