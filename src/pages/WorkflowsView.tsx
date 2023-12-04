@@ -53,6 +53,7 @@ class WorkflowsView extends Component {
             items.push(<tr key={workflow.processgraphid} onClick={() => { Trigger(workflow.processgraphid) }}>
                 <td> <i class="fas fa-cubes"></i> &nbsp; {workflow.processgraphid}</td>
                 <td> {parseTime(workflow.submissiontime)}</td>
+                <td> {workflow.initiatorname}</td>
             </tr>)
         }
 
@@ -60,8 +61,9 @@ class WorkflowsView extends Component {
             <Table striped bordered hover >
                 <thead>
                     <tr>
-                        <th>ProcessGraph Id</th>
+                        <th>Workflow Id</th>
                         <th>Submission Time</th>
+                        <th>Initiator</th>
                     </tr>
                 </thead>
                 <tbody>

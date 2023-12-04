@@ -18,7 +18,7 @@ class GeneratorsView extends Component {
         let generators = this.props.generators
 
         const items = []
-        if (generators.length > 0) {
+        if (generators != null && generators.length > 0) {
             for (let i in generators) {
                 let generator = generators[i]
                 items.push(

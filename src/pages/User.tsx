@@ -138,9 +138,8 @@ class Page extends Component {
                                             <div><code>export COLONIES_TLS="{global.tls}"</code></div>
                                             <div><code>export COLONIES_SERVER_HOST="{global.host}"</code></div>
                                             <div><code>export COLONIES_SERVER_PORT="{global.port}"</code></div>
-                                            <div><code>export COLONIES_COLONY_ID="{global.colonyName}"</code></div>
-                                            <div><code>export COLONIES_EXECUTOR_ID="{global.executorId}"</code></div>
-                                            <div><code>export COLONIES_EXECUTOR_PRVKEY="{global.executorPrvKey}"</code></div>
+                                            <div><code>export COLONIES_COLONY_NAME="{global.colonyName}"</code></div>
+                                            <div><code>export COLONIES_PRVKEY="{global.executorPrvKey}"</code></div>
                                             <div><code>export AWS_S3_ENDPOINT="{global.awsS3Endpoint}"</code></div>
                                             <div><code>export AWS_S3_ACCESSKEY="{global.awsS3Accesskey}"</code></div>
                                             <div><code>export AWS_S3_SECRETKEY="{global.awsS3Secretkey}"</code></div>

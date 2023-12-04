@@ -279,6 +279,14 @@ class ProcessView extends Component {
                         <th>Process Id</th>
                         <td>{process.processid}</td>
                     </tr>
+                    <tr>
+                        <th>Initiator Id</th>
+                        <td>{process.initiatorid}</td>
+                    </tr>
+                    <tr>
+                        <th>Initiator Name</th>
+                        <td>{process.initiatorname}</td>
+                    </tr>
                     <tr onClick={() => { Trigger(process.processgraphid) }}>
                         <th>ProcessGraph Id</th>
                         <td>{process.processgraphid}</td>

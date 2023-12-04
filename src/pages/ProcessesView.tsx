@@ -60,11 +60,11 @@ class ProcessesView extends Component {
 
             if (state == 0) {
                 items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
-                    <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
+                    <td> <i class="fas fa-cube"></i> &nbsp; {process.spec.funcname} </td>
                     <td> {parseTime(process.submissiontime)}</td>
-                    <td> {process.spec.funcname} </td>
                     <td> {parseArr(process.spec.args)} </td>
                     <td> {process.spec.conditions.executortype}</td>
+                    <td> {process.initiatorname}</td>
                     <td>
                         <Button variant="secondary" onClick={(e) => DeleteProcess(e, process.processid)}>
                             Delete
@@ -73,11 +73,11 @@ class ProcessesView extends Component {
                 </tr>)
             } else {
                 items.push(<tr key={process.processid} onClick={() => { Trigger(process.processid) }}>
-                    <td> <i class="fas fa-cube"></i> &nbsp; {process.processid}</td>
+                    <td> <i class="fas fa-cube"></i> &nbsp; {process.spec.funcname} </td>
                     <td> {parseTime(process.submissiontime)}</td>
-                    <td> {process.spec.funcname} </td>
                     <td> {parseArr(process.spec.args)} </td>
                     <td> {process.spec.conditions.executortype}</td>
+                    <td> {process.initiatorname}</td>
                 </tr>)
             }
         }
@@ -86,11 +86,11 @@ class ProcessesView extends Component {
             <Table striped bordered hover >
                 <thead>
                     <tr>
-                        <th>Process Id</th>
                         <th>Submission Time</th>
                         <th>Function</th>
                         <th>Args</th>
                         <th>Target Executor Type</th>
+                        <th>Initator</th>
                     </tr>
                 </thead>
                 <tbody>
