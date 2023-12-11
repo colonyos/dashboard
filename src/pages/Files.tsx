@@ -66,8 +66,8 @@ class Page extends Component {
         for (let i = 0; i < files.length; i++) {
             let file = files[i]
 
-            items.push(<tr key={process.processid} onClick={() => { Trigger(file) }}>
-                <td>  <i class="fas fa-file"></i> &nbsp; {file}</td>
+            items.push(<tr key={process.processid} onClick={() => { Trigger(file.name) }}>
+                <td>  <i class="fas fa-file"></i> &nbsp; {file.name}</td>
             </tr>)
         }
 
